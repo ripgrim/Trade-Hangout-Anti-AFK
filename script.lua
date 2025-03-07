@@ -1541,7 +1541,7 @@ function LoadChangelog()
     if not success then
         -- If local file fails, try to fetch from GitHub
         pcall(function()
-            changelogContent = MarkdownParser.FetchFromURL("https://raw.githubusercontent.com/your-username/tradehub/main/changelog.md")
+            changelogContent = MarkdownParser.FetchFromURL("https://raw.githubusercontent.com/ripgrim/Trade-Hangout-Anti-AFK/main/markdown.lua")
         end)
     end
     
