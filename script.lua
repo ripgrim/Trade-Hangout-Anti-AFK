@@ -646,7 +646,8 @@ local MinimizedFrame = Instance.new("Frame")
 MinimizedFrame.Name = "MinimizedFrame"
 MinimizedFrame.BackgroundColor3 = Colors.CardBackground
 MinimizedFrame.BorderSizePixel = 0
-MinimizedFrame.Position = UDim2.new(1, -120, 0, 10)
+MinimizedFrame.Position = UDim2.new(0.95, 0, 0.05, 0) -- Position in top-right corner
+MinimizedFrame.AnchorPoint = Vector2.new(1, 0) -- Anchor to top-right
 MinimizedFrame.Size = UDim2.new(0, 110, 0, 30)
 MinimizedFrame.Visible = false
 MinimizedFrame.Parent = ScreenGui
@@ -1195,6 +1196,7 @@ function SaveConfig()
         local config = {
             KeybindSettings = KeybindSettings,
             Position = {
+                Centered = true, -- Flag to indicate we're using centered positioning
                 X = MainFrame.Position.X.Offset,
                 Y = MainFrame.Position.Y.Offset
             },
