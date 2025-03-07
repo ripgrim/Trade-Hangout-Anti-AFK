@@ -561,6 +561,20 @@ end
     SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
     SettingsTitle.Parent = SettingsContainer    
 
+-- Add keybind info text
+local KeybindInfo = Instance.new("TextLabel")
+KeybindInfo.Name = "KeybindInfo"
+KeybindInfo.BackgroundTransparency = 1
+KeybindInfo.Position = UDim2.new(0, 10, 0, 200)
+KeybindInfo.Size = UDim2.new(1, -20, 0, 40)
+KeybindInfo.Font = Enum.Font.Gotham
+KeybindInfo.Text = "Note: Keybinds will not activate when typing in text boxes or when the window is out of focus."
+KeybindInfo.TextColor3 = Colors.SecondaryText
+KeybindInfo.TextSize = 12
+KeybindInfo.TextWrapped = true
+KeybindInfo.TextXAlignment = Enum.TextXAlignment.Left
+KeybindInfo.Parent = SettingsContainer
+
 -- Create keybind settings
 local function CreateKeybindSetting(title, keybindType, yPos)
     local Container = Instance.new("Frame")
@@ -885,7 +899,7 @@ function SetupKeybindListener()
     end
     
     -- Create a new keybind listener and track it
-    KeybindConnection = TrackConnection(UserInputService.InputBegan:Connect(function(input)
+    KeybindConnection = TrackConnection(UserInputService.InputBegan:Connect(function(input, gameProcessed)
         -- Check if we're setting a keybind
         if IsChangingKeybind then
             if input.KeyCode ~= Enum.KeyCode.Unknown then
@@ -906,16 +920,36 @@ function SetupKeybindListener()
         
         -- Handle keybinds
         elseif input.UserInputType == Enum.UserInputType.Keyboard then
-            if input.KeyCode == KeybindSettings.Minimize then
-                ToggleMinimize()
-                AddLog("Used keybind: Minimize", Colors.SecondaryText)
-            elseif input.KeyCode == KeybindSettings.KillGUI then
-                AddLog("Used keybind: Kill GUI", Colors.Error)
-                task.wait(0.1) -- Short delay so the log can be seen
-                CleanupAndDestroy()
-            elseif input.KeyCode == KeybindSettings.ToggleAntiAFK then
-                ToggleAntiAFK()
-                AddLog("Used keybind: Toggle Anti-AFK", Colors.SecondaryText)
+            -- Skip keybind handling if:
+            -- 1. The game processed the input (user is typing in a text box)
+            -- 2. The input was received while a text box is focused
+            -- 3. The window is out of focus
+            
+            -- Get the active text box if any
+            local isTextBoxFocused = UserInputService:GetFocusedTextBox() ~= nil
+            
+            -- Check if window is focused (no perfect way to check this, but this helps)
+            local isWindowFocused = true -- Assume focused by default
+            pcall(function()
+                isWindowFocused = game:GetService("GuiService"):IsTenFootInterface() or 
+                                  UserInputService.MouseIconEnabled or
+                                  UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) or
+                                  UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+            end)
+            
+            -- Only process keybinds if the user is not typing and the window is focused
+            if not gameProcessed and not isTextBoxFocused and isWindowFocused then
+                if input.KeyCode == KeybindSettings.Minimize then
+                    ToggleMinimize()
+                    AddLog("Used keybind: Minimize", Colors.SecondaryText)
+                elseif input.KeyCode == KeybindSettings.KillGUI then
+                    AddLog("Used keybind: Kill GUI", Colors.Error)
+                    task.wait(0.1) -- Short delay so the log can be seen
+                    CleanupAndDestroy()
+                elseif input.KeyCode == KeybindSettings.ToggleAntiAFK then
+                    ToggleAntiAFK()
+                    AddLog("Used keybind: Toggle Anti-AFK", Colors.SecondaryText)
+                end
             end
         end
     end))
