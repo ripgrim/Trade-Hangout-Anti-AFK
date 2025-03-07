@@ -71,7 +71,7 @@ local DragInput
 local DragStart
 local StartPosition
 local IdleConnection = nil
-local CurrentTab = "Changelog"
+local CurrentTab = "Home"
 local Logs = {}
 local KeybindSettings = {
     Minimize = Enum.KeyCode.RightShift,
@@ -310,28 +310,6 @@ LogContainer.Size = UDim2.new(1, -80, 1, -30)
 LogContainer.Visible = false
 LogContainer.Parent = MainFrame
 
--- Changelog Container
-local ChangelogContainer = Instance.new("Frame")
-ChangelogContainer.Name = "ChangelogContainer"
-ChangelogContainer.BackgroundTransparency = 1
-ChangelogContainer.Position = UDim2.new(0, 80, 0, 30)
-ChangelogContainer.Size = UDim2.new(1, -80, 1, -30)
-ChangelogContainer.Visible = true -- Make visible by default
-ChangelogContainer.Parent = MainFrame
-
--- Changelog Title
-local ChangelogTitle = Instance.new("TextLabel")
-ChangelogTitle.Name = "ChangelogTitle"
-ChangelogTitle.BackgroundTransparency = 1
-ChangelogTitle.Position = UDim2.new(0, 10, 0, 10)
-ChangelogTitle.Size = UDim2.new(1, -20, 0, 30)
-ChangelogTitle.Font = Enum.Font.GothamBold
-ChangelogTitle.Text = "TradeHub Changelog"
-ChangelogTitle.TextColor3 = Colors.PrimaryText
-ChangelogTitle.TextSize = 18
-ChangelogTitle.TextXAlignment = Enum.TextXAlignment.Left
-ChangelogTitle.Parent = ChangelogContainer
-
 -- Config Container
 local ConfigContainer = Instance.new("Frame")
 ConfigContainer.Name = "ConfigContainer"
@@ -341,34 +319,89 @@ ConfigContainer.Size = UDim2.new(1, -80, 1, -30)
 ConfigContainer.Visible = false
 ConfigContainer.Parent = MainFrame
 
--- Config Title
+-- Config Title with a more modern design
 local ConfigTitle = Instance.new("TextLabel")
 ConfigTitle.Name = "ConfigTitle"
 ConfigTitle.BackgroundTransparency = 1
-ConfigTitle.Position = UDim2.new(0, 10, 0, 10)
-ConfigTitle.Size = UDim2.new(1, -20, 0, 30)
+ConfigTitle.Position = UDim2.new(0, 20, 0, 15)
+ConfigTitle.Size = UDim2.new(1, -40, 0, 30)
 ConfigTitle.Font = Enum.Font.GothamBold
 ConfigTitle.Text = "Configuration"
 ConfigTitle.TextColor3 = Colors.PrimaryText
-ConfigTitle.TextSize = 18
+ConfigTitle.TextSize = 22
 ConfigTitle.TextXAlignment = Enum.TextXAlignment.Left
 ConfigTitle.Parent = ConfigContainer
 
--- Config Container Box
+-- Config Subtitle
+local ConfigSubtitle = Instance.new("TextLabel")
+ConfigSubtitle.Name = "ConfigSubtitle"
+ConfigSubtitle.BackgroundTransparency = 1
+ConfigSubtitle.Position = UDim2.new(0, 20, 0, 45)
+ConfigSubtitle.Size = UDim2.new(1, -40, 0, 20)
+ConfigSubtitle.Font = Enum.Font.Gotham
+ConfigSubtitle.Text = "Manage your TradeHub settings"
+ConfigSubtitle.TextColor3 = Colors.SecondaryText
+ConfigSubtitle.TextSize = 14
+ConfigSubtitle.TextXAlignment = Enum.TextXAlignment.Left
+ConfigSubtitle.Parent = ConfigContainer
+
+-- Main Config Box with rounded corners (using UICorner)
 local ConfigBox = Instance.new("Frame")
 ConfigBox.Name = "ConfigBox"
 ConfigBox.BackgroundColor3 = Colors.CardBackground
 ConfigBox.BorderSizePixel = 0
-ConfigBox.Position = UDim2.new(0, 10, 0, 50)
-ConfigBox.Size = UDim2.new(1, -20, 0, 200)
+ConfigBox.Position = UDim2.new(0, 20, 0, 75)
+ConfigBox.Size = UDim2.new(1, -40, 0, 220)
 ConfigBox.Parent = ConfigContainer
 
--- Config Description
+local ConfigBoxCorner = Instance.new("UICorner")
+ConfigBoxCorner.CornerRadius = UDim.new(0, 8)
+ConfigBoxCorner.Parent = ConfigBox
+
+-- Add subtle shadow effect
+local ConfigBoxShadow = Instance.new("Frame")
+ConfigBoxShadow.Name = "Shadow"
+ConfigBoxShadow.BackgroundColor3 = Colors.Black
+ConfigBoxShadow.BackgroundTransparency = 0.7
+ConfigBoxShadow.BorderSizePixel = 0
+ConfigBoxShadow.Position = UDim2.new(0, 3, 0, 3)
+ConfigBoxShadow.Size = UDim2.new(1, 0, 1, 0)
+ConfigBoxShadow.ZIndex = 0
+ConfigBoxShadow.Parent = ConfigBox
+
+local ConfigBoxShadowCorner = Instance.new("UICorner")
+ConfigBoxShadowCorner.CornerRadius = UDim.new(0, 8)
+ConfigBoxShadowCorner.Parent = ConfigBoxShadow
+
+-- Config Icon (simplified gear icon made with frames)
+local ConfigIcon = Instance.new("Frame")
+ConfigIcon.Name = "ConfigIcon"
+ConfigIcon.BackgroundColor3 = Colors.AccentColor
+ConfigIcon.BorderSizePixel = 0
+ConfigIcon.Position = UDim2.new(0, 15, 0, 15)
+ConfigIcon.Size = UDim2.new(0, 30, 0, 30)
+ConfigIcon.BackgroundTransparency = 1
+ConfigIcon.Parent = ConfigBox
+
+-- Gear circle
+local GearCircle = Instance.new("Frame")
+GearCircle.Name = "GearCircle"
+GearCircle.BackgroundColor3 = Colors.AccentColor
+GearCircle.BorderSizePixel = 0
+GearCircle.Position = UDim2.new(0.5, -8, 0.5, -8)
+GearCircle.Size = UDim2.new(0, 16, 0, 16)
+GearCircle.Parent = ConfigIcon
+
+local GearCircleCorner = Instance.new("UICorner")
+GearCircleCorner.CornerRadius = UDim.new(1, 0)
+GearCircleCorner.Parent = GearCircle
+
+-- Config Description with better formatting
 local ConfigDescription = Instance.new("TextLabel")
 ConfigDescription.Name = "ConfigDescription"
 ConfigDescription.BackgroundTransparency = 1
-ConfigDescription.Position = UDim2.new(0, 10, 0, 10)
-ConfigDescription.Size = UDim2.new(1, -20, 0, 60)
+ConfigDescription.Position = UDim2.new(0, 60, 0, 15)
+ConfigDescription.Size = UDim2.new(1, -80, 0, 60)
 ConfigDescription.Font = Enum.Font.Gotham
 ConfigDescription.Text = "Save and load your TradeHub configurations, including keybinds and UI settings. This allows you to keep your preferences between sessions."
 ConfigDescription.TextColor3 = Colors.SecondaryText
@@ -377,38 +410,113 @@ ConfigDescription.TextWrapped = true
 ConfigDescription.TextXAlignment = Enum.TextXAlignment.Left
 ConfigDescription.Parent = ConfigBox
 
--- Save Config Button
+-- Divider Line
+local Divider = Instance.new("Frame")
+Divider.Name = "Divider"
+Divider.BackgroundColor3 = Colors.BorderColor
+Divider.BorderSizePixel = 0
+Divider.Position = UDim2.new(0, 15, 0, 80)
+Divider.Size = UDim2.new(1, -30, 0, 1)
+Divider.Parent = ConfigBox
+
+-- Save Config Button with rounded corners
 local SaveConfigButton = Instance.new("TextButton")
 SaveConfigButton.Name = "SaveConfigButton"
 SaveConfigButton.BackgroundColor3 = Colors.AccentColor
 SaveConfigButton.BorderSizePixel = 0
-SaveConfigButton.Position = UDim2.new(0, 10, 0, 80)
-SaveConfigButton.Size = UDim2.new(0.5, -15, 0, 40)
+SaveConfigButton.Position = UDim2.new(0, 15, 0, 95)
+SaveConfigButton.Size = UDim2.new(0.5, -20, 0, 40)
 SaveConfigButton.Font = Enum.Font.GothamSemibold
 SaveConfigButton.Text = "Save Configuration"
 SaveConfigButton.TextColor3 = Colors.PrimaryText
 SaveConfigButton.TextSize = 14
 SaveConfigButton.Parent = ConfigBox
 
--- Load Config Button
+local SaveConfigButtonCorner = Instance.new("UICorner")
+SaveConfigButtonCorner.CornerRadius = UDim.new(0, 6)
+SaveConfigButtonCorner.Parent = SaveConfigButton
+
+-- Save Icon indicator
+local SaveIcon = Instance.new("Frame")
+SaveIcon.Name = "SaveIcon"
+SaveIcon.BackgroundTransparency = 1
+SaveIcon.Position = UDim2.new(0, 10, 0.5, -8)
+SaveIcon.Size = UDim2.new(0, 16, 0, 16)
+SaveIcon.Parent = SaveConfigButton
+
+local SaveIconLine = Instance.new("Frame")
+SaveIconLine.Name = "Line"
+SaveIconLine.BackgroundColor3 = Colors.PrimaryText
+SaveIconLine.BorderSizePixel = 0
+SaveIconLine.Position = UDim2.new(0.5, -6, 0, 2)
+SaveIconLine.Size = UDim2.new(0, 12, 0, 2)
+SaveIconLine.Parent = SaveIcon
+
+local SaveIconArrow = Instance.new("Frame")
+SaveIconArrow.Name = "Arrow"
+SaveIconArrow.BackgroundColor3 = Colors.PrimaryText
+SaveIconArrow.BorderSizePixel = 0
+SaveIconArrow.Position = UDim2.new(0.5, -6, 0, 6)
+SaveIconArrow.Size = UDim2.new(0, 12, 0, 8)
+SaveIconArrow.Parent = SaveIcon
+
+local SaveIconArrowCorner = Instance.new("UICorner")
+SaveIconArrowCorner.CornerRadius = UDim.new(0, 2)
+SaveIconArrowCorner.Parent = SaveIconArrow
+
+-- Load Config Button with rounded corners
 local LoadConfigButton = Instance.new("TextButton")
 LoadConfigButton.Name = "LoadConfigButton"
 LoadConfigButton.BackgroundColor3 = Colors.AccentColor
 LoadConfigButton.BorderSizePixel = 0
-LoadConfigButton.Position = UDim2.new(0.5, 5, 0, 80)
-LoadConfigButton.Size = UDim2.new(0.5, -15, 0, 40)
+LoadConfigButton.Position = UDim2.new(0.5, 5, 0, 95)
+LoadConfigButton.Size = UDim2.new(0.5, -20, 0, 40)
 LoadConfigButton.Font = Enum.Font.GothamSemibold
 LoadConfigButton.Text = "Load Configuration"
 LoadConfigButton.TextColor3 = Colors.PrimaryText
 LoadConfigButton.TextSize = 14
 LoadConfigButton.Parent = ConfigBox
 
--- Config Status
+local LoadConfigButtonCorner = Instance.new("UICorner")
+LoadConfigButtonCorner.CornerRadius = UDim.new(0, 6)
+LoadConfigButtonCorner.Parent = LoadConfigButton
+
+-- Load Icon indicator
+local LoadIcon = Instance.new("Frame")
+LoadIcon.Name = "LoadIcon"
+LoadIcon.BackgroundTransparency = 1
+LoadIcon.Position = UDim2.new(0, 10, 0.5, -8)
+LoadIcon.Size = UDim2.new(0, 16, 0, 16)
+LoadIcon.Parent = LoadConfigButton
+
+local LoadIconArrow = Instance.new("Frame")
+LoadIconArrow.Name = "Arrow"
+LoadIconArrow.BackgroundColor3 = Colors.PrimaryText
+LoadIconArrow.BorderSizePixel = 0
+LoadIconArrow.Position = UDim2.new(0.5, -6, 0, 2)
+LoadIconArrow.Size = UDim2.new(0, 12, 0, 8)
+LoadIconArrow.Parent = LoadIcon
+
+local LoadIconArrowCorner = Instance.new("UICorner")
+LoadIconArrowCorner.CornerRadius = UDim.new(0, 2)
+LoadIconArrowCorner.Parent = LoadIconArrow
+
+local LoadIconLine = Instance.new("Frame")
+LoadIconLine.Name = "Line"
+LoadIconLine.BackgroundColor3 = Colors.PrimaryText
+LoadIconLine.BorderSizePixel = 0
+LoadIconLine.Position = UDim2.new(0.5, -6, 0, 12)
+LoadIconLine.Size = UDim2.new(0, 12, 0, 2)
+LoadIconLine.Parent = LoadIcon
+
+-- Config Status with improved styling
 local ConfigStatus = Instance.new("TextLabel")
 ConfigStatus.Name = "ConfigStatus"
-ConfigStatus.BackgroundTransparency = 1
-ConfigStatus.Position = UDim2.new(0, 10, 0, 130)
-ConfigStatus.Size = UDim2.new(1, -20, 0, 60)
+ConfigStatus.BackgroundTransparency = 0.9
+ConfigStatus.BackgroundColor3 = Colors.Background
+ConfigStatus.BorderSizePixel = 0
+ConfigStatus.Position = UDim2.new(0, 15, 0, 145)
+ConfigStatus.Size = UDim2.new(1, -30, 0, 30)
 ConfigStatus.Font = Enum.Font.Gotham
 ConfigStatus.Text = "Status: Ready"
 ConfigStatus.TextColor3 = Colors.SecondaryText
@@ -417,20 +525,67 @@ ConfigStatus.TextWrapped = true
 ConfigStatus.TextXAlignment = Enum.TextXAlignment.Left
 ConfigStatus.Parent = ConfigBox
 
--- Reset Config Button
+local ConfigStatusCorner = Instance.new("UICorner")
+ConfigStatusCorner.CornerRadius = UDim.new(0, 4)
+ConfigStatusCorner.Parent = ConfigStatus
+
+local StatusPadding = Instance.new("UIPadding")
+StatusPadding.PaddingLeft = UDim.new(0, 10)
+StatusPadding.Parent = ConfigStatus
+
+-- Reset Config Button with improved styling
 local ResetConfigButton
 pcall(function()
     ResetConfigButton = Instance.new("TextButton")
     ResetConfigButton.Name = "ResetConfigButton"
     ResetConfigButton.BackgroundColor3 = Colors.Error
     ResetConfigButton.BorderSizePixel = 0
-    ResetConfigButton.Position = UDim2.new(0.25, 0, 0, 160)
-    ResetConfigButton.Size = UDim2.new(0.5, 0, 0, 30)
+    ResetConfigButton.Position = UDim2.new(0, 15, 0, 185)
+    ResetConfigButton.Size = UDim2.new(1, -30, 0, 30)
     ResetConfigButton.Font = Enum.Font.GothamSemibold
     ResetConfigButton.Text = "Reset to Default"
-    ResetConfigButton.TextColor3 = Colors.PrimaryText
+    ResetConfigButton.TextColor3 = Colors.White
     ResetConfigButton.TextSize = 14
     ResetConfigButton.Parent = ConfigBox
+    
+    local ResetConfigButtonCorner = Instance.new("UICorner")
+    ResetConfigButtonCorner.CornerRadius = UDim.new(0, 6)
+    ResetConfigButtonCorner.Parent = ResetConfigButton
+    
+    -- Warning icon
+    local WarningIcon = Instance.new("Frame")
+    WarningIcon.Name = "WarningIcon"
+    WarningIcon.BackgroundTransparency = 1
+    WarningIcon.Position = UDim2.new(0, 10, 0.5, -8)
+    WarningIcon.Size = UDim2.new(0, 16, 0, 16)
+    WarningIcon.Parent = ResetConfigButton
+    
+    local WarningTriangle = Instance.new("Frame")
+    WarningTriangle.Name = "Triangle"
+    WarningTriangle.BackgroundColor3 = Colors.White
+    WarningTriangle.BorderSizePixel = 0
+    WarningTriangle.Size = UDim2.new(1, 0, 1, 0)
+    WarningTriangle.Parent = WarningIcon
+    
+    local WarningTriangleCorner = Instance.new("UICorner")
+    WarningTriangleCorner.CornerRadius = UDim.new(0, 2)
+    WarningTriangleCorner.Parent = WarningTriangle
+    
+    local WarningExclamation = Instance.new("Frame")
+    WarningExclamation.Name = "Exclamation"
+    WarningExclamation.BackgroundColor3 = Colors.Error
+    WarningExclamation.BorderSizePixel = 0
+    WarningExclamation.Position = UDim2.new(0.5, -1, 0.2, 0)
+    WarningExclamation.Size = UDim2.new(0, 2, 0, 8)
+    WarningExclamation.Parent = WarningIcon
+    
+    local WarningDot = Instance.new("Frame")
+    WarningDot.Name = "Dot"
+    WarningDot.BackgroundColor3 = Colors.Error
+    WarningDot.BorderSizePixel = 0
+    WarningDot.Position = UDim2.new(0.5, -1, 0.8, -2)
+    WarningDot.Size = UDim2.new(0, 2, 0, 2)
+    WarningDot.Parent = WarningIcon
 end)
 
 -- Home Tab Button
@@ -472,58 +627,6 @@ LogTab.TextColor3 = Colors.SecondaryText
 LogTab.TextSize = 14
 LogTab.Parent = Sidebar
 
--- Changelog Tab Button (first position)
-local ChangelogTab = Instance.new("TextButton")
-ChangelogTab.Name = "ChangelogTab"
-ChangelogTab.BackgroundColor3 = Colors.TabActive -- Active by default
-ChangelogTab.BorderSizePixel = 0
-ChangelogTab.Position = UDim2.new(0, 0, 0, 10)
-ChangelogTab.Size = UDim2.new(1, 0, 0, 40)
-ChangelogTab.Font = Enum.Font.GothamSemibold
-ChangelogTab.Text = "Changelog"
-ChangelogTab.TextColor3 = Colors.PrimaryText
-ChangelogTab.TextSize = 14
-ChangelogTab.Parent = Sidebar
-
--- Home Tab Button (adjusted position)
-local HomeTab = Instance.new("TextButton")
-HomeTab.Name = "HomeTab"
-HomeTab.BackgroundColor3 = Colors.TabInactive -- Not active by default
-HomeTab.BorderSizePixel = 0
-HomeTab.Position = UDim2.new(0, 0, 0, 50) -- Position moved down
-HomeTab.Size = UDim2.new(1, 0, 0, 40)
-HomeTab.Font = Enum.Font.GothamSemibold
-HomeTab.Text = "Home"
-HomeTab.TextColor3 = Colors.SecondaryText
-HomeTab.TextSize = 14
-HomeTab.Parent = Sidebar
-
--- Settings Tab Button (adjusted position)
-local SettingsTab = Instance.new("TextButton")
-SettingsTab.Name = "SettingsTab"
-SettingsTab.BackgroundColor3 = Colors.TabInactive
-SettingsTab.BorderSizePixel = 0
-SettingsTab.Position = UDim2.new(0, 0, 0, 90) -- Position moved down
-SettingsTab.Size = UDim2.new(1, 0, 0, 40)
-SettingsTab.Font = Enum.Font.GothamSemibold
-SettingsTab.Text = "Settings"
-SettingsTab.TextColor3 = Colors.SecondaryText
-SettingsTab.TextSize = 14
-SettingsTab.Parent = Sidebar
-
--- Log Tab Button (adjusted position)
-local LogTab = Instance.new("TextButton")
-LogTab.Name = "LogTab"
-LogTab.BackgroundColor3 = Colors.TabInactive
-LogTab.BorderSizePixel = 0
-LogTab.Position = UDim2.new(0, 0, 0, 130) -- Position moved down
-LogTab.Size = UDim2.new(1, 0, 0, 40)
-LogTab.Font = Enum.Font.GothamSemibold
-LogTab.Text = "Log"
-LogTab.TextColor3 = Colors.SecondaryText
-LogTab.TextSize = 14
-LogTab.Parent = Sidebar
-
 -- Config Tab Button
 local ConfigTab
 local success, err = pcall(function()
@@ -548,6 +651,49 @@ if not success then
     ConfigTab.Text = "Config"
     ConfigTab.Parent = Sidebar
 end
+
+-- Add a cloud-like sync icon for the Config Tab
+local ConfigTabIcon = Instance.new("Frame")
+ConfigTabIcon.Name = "ConfigTabIcon"
+ConfigTabIcon.BackgroundTransparency = 1
+ConfigTabIcon.Position = UDim2.new(0.5, -8, 0, 10)
+ConfigTabIcon.Size = UDim2.new(0, 16, 0, 16)
+ConfigTabIcon.Parent = ConfigTab
+
+local ConfigTabCloud = Instance.new("Frame")
+ConfigTabCloud.Name = "Cloud"
+ConfigTabCloud.BackgroundColor3 = Colors.SecondaryText
+ConfigTabCloud.BorderSizePixel = 0
+ConfigTabCloud.Position = UDim2.new(0, 2, 0, 8)
+ConfigTabCloud.Size = UDim2.new(0, 12, 0, 6)
+ConfigTabCloud.Parent = ConfigTabIcon
+
+local ConfigTabCloudCorner = Instance.new("UICorner")
+ConfigTabCloudCorner.CornerRadius = UDim.new(1, 0)
+ConfigTabCloudCorner.Parent = ConfigTabCloud
+
+local ConfigTabCircle1 = Instance.new("Frame")
+ConfigTabCircle1.Name = "Circle1"
+ConfigTabCircle1.BackgroundColor3 = Colors.SecondaryText
+ConfigTabCircle1.BorderSizePixel = 0
+ConfigTabCircle1.Position = UDim2.new(0, 4, 0, 4)
+ConfigTabCircle1.Size = UDim2.new(0, 6, 0, 6)
+ConfigTabCircle1.Parent = ConfigTabIcon
+
+local ConfigTabCircle1Corner = Instance.new("UICorner")
+ConfigTabCircle1Corner.CornerRadius = UDim.new(1, 0)
+ConfigTabCircle1Corner.Parent = ConfigTabCircle1
+
+local ConfigTabArrow = Instance.new("Frame")
+ConfigTabArrow.Name = "Arrow"
+ConfigTabArrow.BackgroundColor3 = Colors.SecondaryText
+ConfigTabArrow.BorderSizePixel = 0
+ConfigTabArrow.Position = UDim2.new(0, 7, 0, 2)
+ConfigTabArrow.Size = UDim2.new(0, 2, 0, 4)
+ConfigTabArrow.Parent = ConfigTabIcon
+
+-- Update Config Tab text positioning to accommodate the icon
+ConfigTab.Text = "     Config"
 
 -- Info Container (Home Tab)
 local InfoContainer = Instance.new("Frame")
@@ -930,8 +1076,6 @@ end
 function SwitchTab(tabName)
     pcall(function()
         -- Reset all tab buttons
-        ChangelogTab.BackgroundColor3 = Colors.TabInactive
-        ChangelogTab.TextColor3 = Colors.SecondaryText
         HomeTab.BackgroundColor3 = Colors.TabInactive
         HomeTab.TextColor3 = Colors.SecondaryText
         SettingsTab.BackgroundColor3 = Colors.TabInactive
@@ -948,7 +1092,6 @@ function SwitchTab(tabName)
         end
         
         -- Hide all containers
-        ChangelogContainer.Visible = false
         HomeContainer.Visible = false
         SettingsContainer.Visible = false
         LogContainer.Visible = false
@@ -961,15 +1104,7 @@ function SwitchTab(tabName)
         end
         
         -- Set active tab
-        if tabName == "Changelog" then
-            ChangelogTab.BackgroundColor3 = Colors.TabActive
-            ChangelogTab.TextColor3 = Colors.PrimaryText
-            ChangelogContainer.Visible = true
-            -- Load changelog content if needed
-            if not ChangelogContainer:FindFirstChild("MarkdownContent") then
-                LoadChangelog()
-            end
-        elseif tabName == "Home" then
+        if tabName == "Home" then
             HomeTab.BackgroundColor3 = Colors.TabActive
             HomeTab.TextColor3 = Colors.PrimaryText
             HomeContainer.Visible = true
@@ -1132,9 +1267,6 @@ end
 
 -- Connect events with tracking
 -- Tab switching
-ChangelogTab.MouseButton1Click:Connect(function()
-    SwitchTab("Changelog")
-end)
 
 HomeTab.MouseButton1Click:Connect(function()
     SwitchTab("Home")
@@ -1523,442 +1655,3 @@ end)
 if not success then
     print("TradeHub Error connecting ConfigTab click: " .. tostring(err))
 end
-
--- Load the markdown parser module directly
-local MarkdownParser
-
--- Define the markdown parser code as a string
-local markdownCode = [[
-local MarkdownParser = {}
-
--- Default styles
-MarkdownParser.Style = {
-    Font = {
-        Regular = Enum.Font.Gotham,
-        Bold = Enum.Font.GothamBold,
-        Italic = Enum.Font.GothamMedium,
-        Code = Enum.Font.Code,
-        Header = Enum.Font.GothamBold
-    },
-    TextSize = {
-        Default = 14,
-        H1 = 24,
-        H2 = 20,
-        H3 = 18,
-        H4 = 16,
-        H5 = 15,
-        H6 = 14,
-        Code = 13
-    },
-    Color = {
-        Default = Color3.fromRGB(220, 220, 220),
-        Header = Color3.fromRGB(255, 255, 255),
-        Link = Color3.fromRGB(70, 150, 255),
-        Code = Color3.fromRGB(200, 200, 200),
-        CodeBackground = Color3.fromRGB(40, 40, 40)
-    },
-    LineSpacing = 5,
-    IndentSize = 20
-}
-
--- Fetch markdown from URL
-function MarkdownParser.FetchFromURL(url)
-    local success, result
-    
-    -- Get HttpService
-    local HttpService
-    
-    success, HttpService = pcall(function()
-        return game:GetService("HttpService")
-    end)
-    
-    if not success or not HttpService then
-        return "# Error\nCould not access HttpService. This may be disabled in your executor."
-    end
-    
-    -- Make request
-    success, result = pcall(function()
-        return HttpService:GetAsync(url)
-    end)
-    
-    if not success then
-        return "# Error\nFailed to fetch markdown from URL: " .. url .. "\n\nError: " .. tostring(result)
-    end
-    
-    return result
-end
-
--- Parse markdown text and create UI elements in the specified container
-function MarkdownParser.ParseToContainer(markdownText, container, customStyle)
-    -- Merge custom style with default style
-    local style = {}
-    for k, v in pairs(MarkdownParser.Style) do
-        if type(v) == "table" then
-            style[k] = {}
-            for k2, v2 in pairs(v) do
-                style[k][k2] = v2
-            end
-        else
-            style[k] = v
-        end
-    end
-    
-    if customStyle then
-        for k, v in pairs(customStyle) do
-            if type(v) == "table" and type(style[k]) == "table" then
-                for k2, v2 in pairs(v) do
-                    style[k][k2] = v2
-                end
-            else
-                style[k] = v
-            end
-        end
-    end
-    
-    -- Clear existing content
-    for _, child in pairs(container:GetChildren()) do
-        if child:IsA("GuiObject") and child.Name ~= "ChangelogTitle" then
-            child:Destroy()
-        end
-    end
-    
-    -- Create a scrolling frame for the content
-    local scrollFrame = Instance.new("ScrollingFrame")
-    scrollFrame.Name = "MarkdownContent"
-    scrollFrame.BackgroundTransparency = 1 -- Set to fully transparent
-    scrollFrame.Position = UDim2.new(0, 10, 0, 50) -- Position below title
-    scrollFrame.Size = UDim2.new(1, -20, 1, -60)
-    scrollFrame.CanvasSize = UDim2.new(1, -20, 0, 0) -- Will be updated as content is added
-    scrollFrame.ScrollBarThickness = 6
-    scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
-    scrollFrame.BorderSizePixel = 0
-    scrollFrame.Parent = container
-    
-    -- Split the text into lines
-    local lines = {}
-    for line in string.gmatch(markdownText .. "\n", "([^\n]*)\n") do
-        table.insert(lines, line)
-    end
-    
-    local currentY = 0
-    local lineIndex = 1
-    
-    while lineIndex <= #lines do
-        local line = lines[lineIndex]
-        
-        -- Check for headers
-        local headerLevel, headerText = string.match(line, "^(#+)%s+(.+)")
-        if headerLevel then
-            local level = math.min(#headerLevel, 6)
-            
-            local header = Instance.new("TextLabel")
-            header.BackgroundTransparency = 1
-            header.Position = UDim2.new(0, 0, 0, currentY)
-            header.Size = UDim2.new(1, 0, 0, style.TextSize["H" .. level] + 10)
-            header.Font = style.Font.Header
-            header.Text = headerText
-            header.TextColor3 = style.Color.Header
-            header.TextSize = style.TextSize["H" .. level]
-            header.TextXAlignment = Enum.TextXAlignment.Left
-            header.TextWrapped = true
-            header.Parent = scrollFrame
-            
-            currentY = currentY + header.Size.Y.Offset + style.LineSpacing
-            lineIndex = lineIndex + 1
-            
-            -- Add horizontal line after H1 and H2
-            if level <= 2 then
-                local divider = Instance.new("Frame")
-                divider.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-                divider.BorderSizePixel = 0
-                divider.Position = UDim2.new(0, 0, 0, currentY)
-                divider.Size = UDim2.new(1, 0, 0, 1)
-                divider.Parent = scrollFrame
-                
-                currentY = currentY + 3 + style.LineSpacing
-            end
-        -- Check for code blocks
-        elseif line:match("^```") then
-            local codeBlockContent = {}
-            local language = line:match("^```(%w*)")
-            
-            lineIndex = lineIndex + 1
-            while lineIndex <= #lines and not lines[lineIndex]:match("^```") do
-                table.insert(codeBlockContent, lines[lineIndex])
-                lineIndex = lineIndex + 1
-            end
-            
-            -- Skip the closing ```
-            lineIndex = lineIndex + 1
-            
-            local codeText = table.concat(codeBlockContent, "\n")
-            
-            -- Create a frame for the code block
-            local codeFrame = Instance.new("Frame")
-            codeFrame.BackgroundColor3 = style.Color.CodeBackground
-            codeFrame.BorderSizePixel = 0
-            codeFrame.Position = UDim2.new(0, 0, 0, currentY)
-            
-            -- Create code text
-            local codeLabel = Instance.new("TextLabel")
-            codeLabel.BackgroundTransparency = 1
-            codeLabel.Position = UDim2.new(0, 10, 0, 10)
-            codeLabel.Size = UDim2.new(1, -20, 1, -20)
-            codeLabel.Font = style.Font.Code
-            codeLabel.Text = codeText
-            codeLabel.TextColor3 = style.Color.Code
-            codeLabel.TextSize = style.TextSize.Code
-            codeLabel.TextXAlignment = Enum.TextXAlignment.Left
-            codeLabel.TextYAlignment = Enum.TextYAlignment.Top
-            codeLabel.TextWrapped = true
-            codeLabel.Parent = codeFrame
-            
-            -- Calculate the height based on content
-            local textHeight = 0
-            local textService = game:GetService("TextService")
-            local textSize = textService:GetTextSize(
-                codeText,
-                style.TextSize.Code,
-                style.Font.Code,
-                Vector2.new(scrollFrame.Size.X.Offset - 40, 10000)
-            )
-            textHeight = textSize.Y
-            
-            codeLabel.Size = UDim2.new(1, -20, 0, textHeight)
-            codeFrame.Size = UDim2.new(1, 0, 0, textHeight + 20)
-            codeFrame.Parent = scrollFrame
-            
-            currentY = currentY + codeFrame.Size.Y.Offset + style.LineSpacing
-        -- Check for lists
-        elseif line:match("^%s*[%-%*]%s+") or line:match("^%s*%d+%.%s+") then
-            local indentLevel = 0
-            local listItems = {}
-            
-            while lineIndex <= #lines do
-                local currentLine = lines[lineIndex]
-                local spaces = currentLine:match("^(%s*)")
-                local currentIndent = spaces and #spaces/2 or 0
-                local listMarker, listText = currentLine:match("^%s*([%-%*]%s+)(.+)") or currentLine:match("^%s*(%d+%.%s+)(.+)")
-                
-                if not listMarker then
-                    break
-                end
-                
-                table.insert(listItems, {
-                    text = listText,
-                    marker = listMarker:sub(1,1) == "-" or listMarker:sub(1,1) == "*" and "•" or listMarker,
-                    indent = currentIndent
-                })
-                
-                lineIndex = lineIndex + 1
-            end
-            
-            -- Create list items
-            for i, item in ipairs(listItems) do
-                local listItem = Instance.new("TextLabel")
-                listItem.BackgroundTransparency = 1
-                listItem.Position = UDim2.new(0, item.indent * style.IndentSize, 0, currentY)
-                listItem.Size = UDim2.new(1, -item.indent * style.IndentSize, 0, style.TextSize.Default + 5)
-                listItem.Font = style.Font.Regular
-                
-                -- Format the list marker
-                local displayMarker = item.marker
-                if displayMarker == "•" then
-                    displayMarker = "• "
-                end
-                
-                listItem.Text = displayMarker .. " " .. item.text
-                listItem.TextColor3 = style.Color.Default
-                listItem.TextSize = style.TextSize.Default
-                listItem.TextXAlignment = Enum.TextXAlignment.Left
-                listItem.TextWrapped = true
-                listItem.Parent = scrollFrame
-                
-                -- Calculate height based on content
-                local textService = game:GetService("TextService")
-                local textSize = textService:GetTextSize(
-                    listItem.Text,
-                    style.TextSize.Default,
-                    style.Font.Regular,
-                    Vector2.new(scrollFrame.Size.X.Offset - (item.indent * style.IndentSize), 10000)
-                )
-                listItem.Size = UDim2.new(1, -item.indent * style.IndentSize, 0, textSize.Y)
-                
-                currentY = currentY + listItem.Size.Y.Offset + 2
-            end
-            
-            currentY = currentY + style.LineSpacing
-        -- Regular paragraph
-        else
-            -- Process consecutive lines until we find a blank line or special format
-            local paragraphLines = {}
-            
-            while lineIndex <= #lines do
-                local currentLine = lines[lineIndex]
-                -- Stop at blank line or special format
-                if currentLine == "" or 
-                   currentLine:match("^#+%s+") or 
-                   currentLine:match("^```") or
-                   currentLine:match("^%s*[%-%*]%s+") or 
-                   currentLine:match("^%s*%d+%.%s+") then
-                    break
-                end
-                
-                table.insert(paragraphLines, currentLine)
-                lineIndex = lineIndex + 1
-            end
-            
-            -- If no paragraph content, just skip the blank line
-            if #paragraphLines == 0 then
-                lineIndex = lineIndex + 1
-                currentY = currentY + style.LineSpacing
-            else
-                local paragraphText = table.concat(paragraphLines, " ")
-                
-                -- Basic formatting for bold/italic/links
-                local formattedText = paragraphText
-                
-                -- Create paragraph label
-                local paragraph = Instance.new("TextLabel")
-                paragraph.BackgroundTransparency = 1
-                paragraph.Position = UDim2.new(0, 0, 0, currentY)
-                paragraph.Size = UDim2.new(1, 0, 0, style.TextSize.Default + 5)
-                paragraph.Font = style.Font.Regular
-                paragraph.Text = formattedText
-                paragraph.TextColor3 = style.Color.Default
-                paragraph.TextSize = style.TextSize.Default
-                paragraph.TextXAlignment = Enum.TextXAlignment.Left
-                paragraph.TextWrapped = true
-                paragraph.Parent = scrollFrame
-                
-                -- Calculate height based on content
-                local textService = game:GetService("TextService")
-                local textSize = textService:GetTextSize(
-                    formattedText,
-                    style.TextSize.Default,
-                    style.Font.Regular,
-                    Vector2.new(scrollFrame.Size.X.Offset, 10000)
-                )
-                paragraph.Size = UDim2.new(1, 0, 0, textSize.Y)
-                
-                currentY = currentY + paragraph.Size.Y.Offset + style.LineSpacing
-            end
-        end
-    end
-    
-    -- Update the canvas size
-    scrollFrame.CanvasSize = UDim2.new(0, 0, 0, currentY)
-end
-
--- Load and display a local markdown file
-function MarkdownParser.LoadFile(filePath, container, customStyle)
-    local success, content = pcall(function()
-        return readfile(filePath)
-    end)
-    
-    if not success then
-        local errorMessage = "# Error Loading File\n\nCould not load file: " .. filePath
-        MarkdownParser.ParseToContainer(errorMessage, container, customStyle)
-        return false
-    end
-    
-    MarkdownParser.ParseToContainer(content, container, customStyle)
-    return true
-end
-
-return MarkdownParser
-]]
-
--- Now load the markdown parser
-pcall(function()
-    MarkdownParser = loadstring(markdownCode)()
-end)
-
--- Function to load changelog content
-function LoadChangelog()
-    -- Changelog content embedded directly in the script
-    local changelogContent = [[# TradeHub Changelog
-
-## v1.3.0 - Current Version
-
-### New Features
-- Added Config tab for saving/loading UI settings
-- Added Changelog tab to track version history
-- Added centered positioning for the main UI
-- Improved keybind behavior to not trigger when typing or when the window is out of focus
-
-### Bug Fixes
-- Fixed Anti-AFK toggle disappearing from the UI
-- Fixed issues with color initialization
-- Fixed UI positioning when using different screen resolutions
-- Enhanced error handling throughout the script
-
-## v1.2.0
-
-### New Features
-- Added Log tab to track trading activity
-- Implemented Trade History feature
-- Added status indicators for trades
-- Added ability to copy trade information to clipboard
-
-### Bug Fixes
-- Fixed bugs related to UI visibility
-- Improved error handling for HTTP requests
-- Fixed issues with trade calculations
-
-## v1.1.0
-
-### New Features
-- Added keybind customization in Settings
-- Implemented Anti-AFK functionality
-- Added minimize/maximize functionality
-- Improved UI scaling for different screen resolutions
-
-### Bug Fixes
-- Fixed dragging issue when UI is near screen edge
-- Corrected text alignment in trade details
-- Fixed memory leaks in UI rendering
-
-## v1.0.0 - Initial Release
-
-### Features
-- Trading Hub interface with clean modern design
-- Home tab with quick access to important trading functions
-- Settings tab for customization
-- Trade Calculator for instant value comparison
-- Real-time market data integration
-- Drag-and-drop UI positioning]]
-    
-    -- If parser is available, use it to display the changelog
-    if MarkdownParser then
-        MarkdownParser.ParseToContainer(changelogContent, ChangelogContainer, {
-            Color = {
-                Default = Colors.SecondaryText,
-                Header = Colors.PrimaryText,
-                Link = Colors.AccentColor,
-                Code = Colors.SecondaryText,
-                CodeBackground = Colors.Background
-            }
-        })
-    else
-        -- Fallback if parser is not available
-        local fallbackText = Instance.new("TextLabel")
-        fallbackText.Name = "FallbackText"
-        fallbackText.BackgroundTransparency = 1
-        fallbackText.Position = UDim2.new(0, 10, 0, 50)
-        fallbackText.Size = UDim2.new(1, -20, 1, -60)
-        fallbackText.Font = Enum.Font.Gotham
-        fallbackText.Text = "Changelog content could not be displayed. The markdown parser module is missing."
-        fallbackText.TextColor3 = Colors.SecondaryText
-        fallbackText.TextSize = 14
-        fallbackText.TextWrapped = true
-        fallbackText.TextXAlignment = Enum.TextXAlignment.Left
-        fallbackText.Parent = ChangelogContainer
-    end
-end
-
--- Load changelog on startup
-task.spawn(function()
-    task.wait(1) -- Wait for UI to initialize
-    LoadChangelog()
-end)
