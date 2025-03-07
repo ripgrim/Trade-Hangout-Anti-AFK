@@ -75,7 +75,7 @@ local CurrentTab = "Changelog"
 local Logs = {}
 local KeybindSettings = {
     Minimize = Enum.KeyCode.RightShift,
-    KillGUI = Enum.KeyCode.BackSpace,
+    KillGUI = Enum.KeyCode.Backspace,
     ToggleAntiAFK = Enum.KeyCode.F
 }
 local IsMinimized = false
@@ -1456,9 +1456,9 @@ function ResetConfig()
     local success, result = pcall(function()
         -- Reset keybinds to default
         KeybindSettings = {
-            Minimize = Enum.KeyCode.RightControl,
-            KillGUI = Enum.KeyCode.End,
-            ToggleAntiAFK = Enum.KeyCode.Home
+            Minimize = Enum.KeyCode.RightShift,
+            KillGUI = Enum.KeyCode.Backspace,
+            ToggleAntiAFK = Enum.KeyCode.F
         }
         
         -- Update keybind buttons
