@@ -71,12 +71,12 @@ local DragInput
 local DragStart
 local StartPosition
 local IdleConnection = nil
-local CurrentTab = "Home"
+local CurrentTab = "Changelog"
 local Logs = {}
 local KeybindSettings = {
-    Minimize = Enum.KeyCode.RightControl,
-    KillGUI = Enum.KeyCode.End,
-    ToggleAntiAFK = Enum.KeyCode.Home
+    Minimize = Enum.KeyCode.RightShift,
+    KillGUI = Enum.KeyCode.BackSpace,
+    ToggleAntiAFK = Enum.KeyCode.F
 }
 local IsMinimized = false
 local IsChangingKeybind = nil
@@ -310,6 +310,28 @@ LogContainer.Size = UDim2.new(1, -80, 1, -30)
 LogContainer.Visible = false
 LogContainer.Parent = MainFrame
 
+-- Changelog Container
+local ChangelogContainer = Instance.new("Frame")
+ChangelogContainer.Name = "ChangelogContainer"
+ChangelogContainer.BackgroundTransparency = 1
+ChangelogContainer.Position = UDim2.new(0, 80, 0, 30)
+ChangelogContainer.Size = UDim2.new(1, -80, 1, -30)
+ChangelogContainer.Visible = true -- Make visible by default
+ChangelogContainer.Parent = MainFrame
+
+-- Changelog Title
+local ChangelogTitle = Instance.new("TextLabel")
+ChangelogTitle.Name = "ChangelogTitle"
+ChangelogTitle.BackgroundTransparency = 1
+ChangelogTitle.Position = UDim2.new(0, 10, 0, 10)
+ChangelogTitle.Size = UDim2.new(1, -20, 0, 30)
+ChangelogTitle.Font = Enum.Font.GothamBold
+ChangelogTitle.Text = "TradeHub Changelog"
+ChangelogTitle.TextColor3 = Colors.PrimaryText
+ChangelogTitle.TextSize = 18
+ChangelogTitle.TextXAlignment = Enum.TextXAlignment.Left
+ChangelogTitle.Parent = ChangelogContainer
+
 -- Config Container
 local ConfigContainer = Instance.new("Frame")
 ConfigContainer.Name = "ConfigContainer"
@@ -412,43 +434,95 @@ pcall(function()
 end)
 
 -- Home Tab Button
-    local HomeTab = Instance.new("TextButton")
-    HomeTab.Name = "HomeTab"
-    HomeTab.BackgroundColor3 = Colors.TabActive
-    HomeTab.BorderSizePixel = 0
-    HomeTab.Position = UDim2.new(0, 0, 0, 10)
-    HomeTab.Size = UDim2.new(1, 0, 0, 40)
-    HomeTab.Font = Enum.Font.GothamSemibold
-    HomeTab.Text = "Home"
-    HomeTab.TextColor3 = Colors.PrimaryText
-    HomeTab.TextSize = 14
-    HomeTab.Parent = Sidebar
+local HomeTab = Instance.new("TextButton")
+HomeTab.Name = "HomeTab"
+HomeTab.BackgroundColor3 = Colors.TabActive
+HomeTab.BorderSizePixel = 0
+HomeTab.Position = UDim2.new(0, 0, 0, 10)
+HomeTab.Size = UDim2.new(1, 0, 0, 40)
+HomeTab.Font = Enum.Font.GothamSemibold
+HomeTab.Text = "Home"
+HomeTab.TextColor3 = Colors.PrimaryText
+HomeTab.TextSize = 14
+HomeTab.Parent = Sidebar
 
 -- Settings Tab Button
-    local SettingsTab = Instance.new("TextButton")
-    SettingsTab.Name = "SettingsTab"
-    SettingsTab.BackgroundColor3 = Colors.TabInactive
-    SettingsTab.BorderSizePixel = 0
-    SettingsTab.Position = UDim2.new(0, 0, 0, 50)
-    SettingsTab.Size = UDim2.new(1, 0, 0, 40)
-    SettingsTab.Font = Enum.Font.GothamSemibold
-    SettingsTab.Text = "Settings"
-    SettingsTab.TextColor3 = Colors.SecondaryText
-    SettingsTab.TextSize = 14
-    SettingsTab.Parent = Sidebar
+local SettingsTab = Instance.new("TextButton")
+SettingsTab.Name = "SettingsTab"
+SettingsTab.BackgroundColor3 = Colors.TabInactive
+SettingsTab.BorderSizePixel = 0
+SettingsTab.Position = UDim2.new(0, 0, 0, 50)
+SettingsTab.Size = UDim2.new(1, 0, 0, 40)
+SettingsTab.Font = Enum.Font.GothamSemibold
+SettingsTab.Text = "Settings"
+SettingsTab.TextColor3 = Colors.SecondaryText
+SettingsTab.TextSize = 14
+SettingsTab.Parent = Sidebar
 
 -- Log Tab Button
-    local LogTab = Instance.new("TextButton")
-    LogTab.Name = "LogTab"
-    LogTab.BackgroundColor3 = Colors.TabInactive
-    LogTab.BorderSizePixel = 0
-    LogTab.Position = UDim2.new(0, 0, 0, 90)
-    LogTab.Size = UDim2.new(1, 0, 0, 40)
-    LogTab.Font = Enum.Font.GothamSemibold
-    LogTab.Text = "Log"
-    LogTab.TextColor3 = Colors.SecondaryText
-    LogTab.TextSize = 14
-    LogTab.Parent = Sidebar
+local LogTab = Instance.new("TextButton")
+LogTab.Name = "LogTab"
+LogTab.BackgroundColor3 = Colors.TabInactive
+LogTab.BorderSizePixel = 0
+LogTab.Position = UDim2.new(0, 0, 0, 90)
+LogTab.Size = UDim2.new(1, 0, 0, 40)
+LogTab.Font = Enum.Font.GothamSemibold
+LogTab.Text = "Log"
+LogTab.TextColor3 = Colors.SecondaryText
+LogTab.TextSize = 14
+LogTab.Parent = Sidebar
+
+-- Changelog Tab Button (first position)
+local ChangelogTab = Instance.new("TextButton")
+ChangelogTab.Name = "ChangelogTab"
+ChangelogTab.BackgroundColor3 = Colors.TabActive -- Active by default
+ChangelogTab.BorderSizePixel = 0
+ChangelogTab.Position = UDim2.new(0, 0, 0, 10)
+ChangelogTab.Size = UDim2.new(1, 0, 0, 40)
+ChangelogTab.Font = Enum.Font.GothamSemibold
+ChangelogTab.Text = "Changelog"
+ChangelogTab.TextColor3 = Colors.PrimaryText
+ChangelogTab.TextSize = 14
+ChangelogTab.Parent = Sidebar
+
+-- Home Tab Button (adjusted position)
+local HomeTab = Instance.new("TextButton")
+HomeTab.Name = "HomeTab"
+HomeTab.BackgroundColor3 = Colors.TabInactive -- Not active by default
+HomeTab.BorderSizePixel = 0
+HomeTab.Position = UDim2.new(0, 0, 0, 50) -- Position moved down
+HomeTab.Size = UDim2.new(1, 0, 0, 40)
+HomeTab.Font = Enum.Font.GothamSemibold
+HomeTab.Text = "Home"
+HomeTab.TextColor3 = Colors.SecondaryText
+HomeTab.TextSize = 14
+HomeTab.Parent = Sidebar
+
+-- Settings Tab Button (adjusted position)
+local SettingsTab = Instance.new("TextButton")
+SettingsTab.Name = "SettingsTab"
+SettingsTab.BackgroundColor3 = Colors.TabInactive
+SettingsTab.BorderSizePixel = 0
+SettingsTab.Position = UDim2.new(0, 0, 0, 90) -- Position moved down
+SettingsTab.Size = UDim2.new(1, 0, 0, 40)
+SettingsTab.Font = Enum.Font.GothamSemibold
+SettingsTab.Text = "Settings"
+SettingsTab.TextColor3 = Colors.SecondaryText
+SettingsTab.TextSize = 14
+SettingsTab.Parent = Sidebar
+
+-- Log Tab Button (adjusted position)
+local LogTab = Instance.new("TextButton")
+LogTab.Name = "LogTab"
+LogTab.BackgroundColor3 = Colors.TabInactive
+LogTab.BorderSizePixel = 0
+LogTab.Position = UDim2.new(0, 0, 0, 130) -- Position moved down
+LogTab.Size = UDim2.new(1, 0, 0, 40)
+LogTab.Font = Enum.Font.GothamSemibold
+LogTab.Text = "Log"
+LogTab.TextColor3 = Colors.SecondaryText
+LogTab.TextSize = 14
+LogTab.Parent = Sidebar
 
 -- Config Tab Button
 local ConfigTab
@@ -457,7 +531,7 @@ local success, err = pcall(function()
     ConfigTab.Name = "ConfigTab"
     ConfigTab.BackgroundColor3 = Colors.TabInactive
     ConfigTab.BorderSizePixel = 0
-    ConfigTab.Position = UDim2.new(0, 0, 0, 130)
+    ConfigTab.Position = UDim2.new(0, 0, 0, 170) -- Position moved down
     ConfigTab.Size = UDim2.new(1, 0, 0, 40)
     ConfigTab.Font = Enum.Font.GothamSemibold
     ConfigTab.Text = "Config"
@@ -475,91 +549,123 @@ if not success then
     ConfigTab.Parent = Sidebar
 end
 
--- Toggle Switch Container
-    local ToggleContainer = Instance.new("Frame")
-    ToggleContainer.Name = "ToggleContainer"
-    ToggleContainer.BackgroundTransparency = 1
-    ToggleContainer.Position = UDim2.new(0.7, 0, 0, 15)
-    ToggleContainer.Size = UDim2.new(0.3, -10, 0, 30)
-    ToggleContainer.Parent = StatusContainer
-
-    local ToggleBackground = Instance.new("Frame")
-    ToggleBackground.Name = "ToggleBackground"
-    ToggleBackground.BackgroundColor3 = Colors.ToggleOff
-    ToggleBackground.BorderSizePixel = 0
-    ToggleBackground.Position = UDim2.new(0, 0, 0.5, -10)
-    ToggleBackground.Size = UDim2.new(0, 44, 0, 20)
-    ToggleBackground.Parent = ToggleContainer
-
-    local ToggleButton = Instance.new("Frame")
-    ToggleButton.Name = "ToggleButton"
-    ToggleButton.BackgroundColor3 = Colors.White
-    ToggleButton.BorderSizePixel = 0
-    ToggleButton.Position = UDim2.new(0, 2, 0, 2)
-    ToggleButton.Size = UDim2.new(0, 16, 0, 16)
-    ToggleButton.Parent = ToggleBackground
-
 -- Info Container (Home Tab)
-    local InfoContainer = Instance.new("Frame")
-    InfoContainer.Name = "InfoContainer"
-    InfoContainer.BackgroundColor3 = Colors.CardBackground
-    InfoContainer.BorderSizePixel = 0
-    InfoContainer.Position = UDim2.new(0, 10, 0, 80)
-    InfoContainer.Size = UDim2.new(1, -20, 0, 180)
-    InfoContainer.Parent = HomeContainer
+local InfoContainer = Instance.new("Frame")
+InfoContainer.Name = "InfoContainer"
+InfoContainer.BackgroundColor3 = Colors.CardBackground
+InfoContainer.BorderSizePixel = 0
+InfoContainer.Position = UDim2.new(0, 10, 0, 80)
+InfoContainer.Size = UDim2.new(1, -20, 0, 180)
+InfoContainer.Parent = HomeContainer
 
-    local InfoTitle = Instance.new("TextLabel")
-    InfoTitle.Name = "InfoTitle"
-    InfoTitle.BackgroundTransparency = 1
-    InfoTitle.Position = UDim2.new(0, 10, 0, 10)
-    InfoTitle.Size = UDim2.new(1, -20, 0, 20)
-    InfoTitle.Font = Enum.Font.GothamBold
-    InfoTitle.Text = "Information"
-    InfoTitle.TextColor3 = Colors.PrimaryText
-    InfoTitle.TextSize = 14
-    InfoTitle.TextXAlignment = Enum.TextXAlignment.Left
-    InfoTitle.Parent = InfoContainer
+-- Status Container (Home Tab)
+local StatusContainer = Instance.new("Frame")
+StatusContainer.Name = "StatusContainer"
+StatusContainer.BackgroundColor3 = Colors.CardBackground
+StatusContainer.BorderSizePixel = 0
+StatusContainer.Position = UDim2.new(0, 10, 0, 10)
+StatusContainer.Size = UDim2.new(1, -20, 0, 60)
+StatusContainer.Parent = HomeContainer
 
-    local InfoText = Instance.new("TextLabel")
-    InfoText.Name = "InfoText"
-    InfoText.BackgroundTransparency = 1
-    InfoText.Position = UDim2.new(0, 10, 0, 30)
-    InfoText.Size = UDim2.new(1, -20, 0, 40)
-    InfoText.Font = Enum.Font.Gotham
-    InfoText.Text = "Anti-AFK will prevent you from being disconnected due to inactivity. Toggle the switch to activate."
-    InfoText.TextColor3 = Colors.SecondaryText
-    InfoText.TextSize = 12
-    InfoText.TextWrapped = true
-    InfoText.TextXAlignment = Enum.TextXAlignment.Left
-    InfoText.TextYAlignment = Enum.TextYAlignment.Top
-    InfoText.Parent = InfoContainer
+local StatusTitle = Instance.new("TextLabel")
+StatusTitle.Name = "StatusTitle"
+StatusTitle.BackgroundTransparency = 1
+StatusTitle.Position = UDim2.new(0, 10, 0, 10)
+StatusTitle.Size = UDim2.new(0.5, 0, 0, 20)
+StatusTitle.Font = Enum.Font.GothamBold
+StatusTitle.Text = "Anti-AFK Status"
+StatusTitle.TextColor3 = Colors.PrimaryText
+StatusTitle.TextSize = 14
+StatusTitle.TextXAlignment = Enum.TextXAlignment.Left
+StatusTitle.Parent = StatusContainer
 
-    local KeybindsInfo = Instance.new("TextLabel")
-    KeybindsInfo.Name = "KeybindsInfo"
-    KeybindsInfo.BackgroundTransparency = 1
-    KeybindsInfo.Position = UDim2.new(0, 10, 0, 80)
-    KeybindsInfo.Size = UDim2.new(1, -20, 0, 100)
-    KeybindsInfo.Font = Enum.Font.Gotham
-    KeybindsInfo.Text = "Navigate using the sidebar tabs. You can configure keybinds in the Settings tab."
-    KeybindsInfo.TextColor3 = Colors.SecondaryText
-    KeybindsInfo.TextSize = 12
-    KeybindsInfo.TextWrapped = true
-    KeybindsInfo.TextXAlignment = Enum.TextXAlignment.Left
-    KeybindsInfo.TextYAlignment = Enum.TextYAlignment.Top
-    KeybindsInfo.Parent = InfoContainer
+local StatusValue = Instance.new("TextLabel")
+StatusValue.Name = "StatusValue"
+StatusValue.BackgroundTransparency = 1
+StatusValue.Position = UDim2.new(0, 10, 0, 30)
+StatusValue.Size = UDim2.new(0.5, 0, 0, 20)
+StatusValue.Font = Enum.Font.Gotham
+StatusValue.Text = "Inactive"
+StatusValue.TextColor3 = Colors.SecondaryText
+StatusValue.TextSize = 12
+StatusValue.TextXAlignment = Enum.TextXAlignment.Left
+StatusValue.Parent = StatusContainer
+
+local ToggleContainer = Instance.new("Frame")
+ToggleContainer.Name = "ToggleContainer"
+ToggleContainer.BackgroundTransparency = 1
+ToggleContainer.Position = UDim2.new(0.7, 0, 0, 15)
+ToggleContainer.Size = UDim2.new(0.3, -10, 0, 30)
+ToggleContainer.Parent = StatusContainer
+
+local ToggleBackground = Instance.new("Frame")
+ToggleBackground.Name = "ToggleBackground"
+ToggleBackground.BackgroundColor3 = Colors.ToggleOff
+ToggleBackground.BorderSizePixel = 0
+ToggleBackground.Position = UDim2.new(0, 0, 0.5, -10)
+ToggleBackground.Size = UDim2.new(0, 44, 0, 20)
+ToggleBackground.Parent = ToggleContainer
+
+local ToggleButton = Instance.new("Frame")
+ToggleButton.Name = "ToggleButton"
+ToggleButton.BackgroundColor3 = Colors.White
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(0, 2, 0, 2)
+ToggleButton.Size = UDim2.new(0, 16, 0, 16)
+ToggleButton.Parent = ToggleBackground
+
+local InfoTitle = Instance.new("TextLabel")
+InfoTitle.Name = "InfoTitle"
+InfoTitle.BackgroundTransparency = 1
+InfoTitle.Position = UDim2.new(0, 10, 0, 10)
+InfoTitle.Size = UDim2.new(1, -20, 0, 20)
+InfoTitle.Font = Enum.Font.GothamBold
+InfoTitle.Text = "Information"
+InfoTitle.TextColor3 = Colors.PrimaryText
+InfoTitle.TextSize = 14
+InfoTitle.TextXAlignment = Enum.TextXAlignment.Left
+InfoTitle.Parent = InfoContainer
+
+local InfoText = Instance.new("TextLabel")
+InfoText.Name = "InfoText"
+InfoText.BackgroundTransparency = 1
+InfoText.Position = UDim2.new(0, 10, 0, 30)
+InfoText.Size = UDim2.new(1, -20, 0, 40)
+InfoText.Font = Enum.Font.Gotham
+InfoText.Text = "Anti-AFK will prevent you from being disconnected due to inactivity. Toggle the switch to activate."
+InfoText.TextColor3 = Colors.SecondaryText
+InfoText.TextSize = 12
+InfoText.TextWrapped = true
+InfoText.TextXAlignment = Enum.TextXAlignment.Left
+InfoText.TextYAlignment = Enum.TextYAlignment.Top
+InfoText.Parent = InfoContainer
+
+local KeybindsInfo = Instance.new("TextLabel")
+KeybindsInfo.Name = "KeybindsInfo"
+KeybindsInfo.BackgroundTransparency = 1
+KeybindsInfo.Position = UDim2.new(0, 10, 0, 80)
+KeybindsInfo.Size = UDim2.new(1, -20, 0, 100)
+KeybindsInfo.Font = Enum.Font.Gotham
+KeybindsInfo.Text = "Navigate using the sidebar tabs. You can configure keybinds in the Settings tab."
+KeybindsInfo.TextColor3 = Colors.SecondaryText
+KeybindsInfo.TextSize = 12
+KeybindsInfo.TextWrapped = true
+KeybindsInfo.TextXAlignment = Enum.TextXAlignment.Left
+KeybindsInfo.TextYAlignment = Enum.TextYAlignment.Top
+KeybindsInfo.Parent = InfoContainer
 
 -- Settings Container
-    local SettingsTitle = Instance.new("TextLabel")
-    SettingsTitle.Name = "SettingsTitle"
-    SettingsTitle.BackgroundTransparency = 1
-    SettingsTitle.Position = UDim2.new(0, 10, 0, 10)
-    SettingsTitle.Size = UDim2.new(1, -20, 0, 30)
-    SettingsTitle.Font = Enum.Font.GothamBold
-    SettingsTitle.Text = "Keybind Settings"
-    SettingsTitle.TextColor3 = Colors.PrimaryText
-    SettingsTitle.TextSize = 18
-    SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
-    SettingsTitle.Parent = SettingsContainer    
+local SettingsTitle = Instance.new("TextLabel")
+SettingsTitle.Name = "SettingsTitle"
+SettingsTitle.BackgroundTransparency = 1
+SettingsTitle.Position = UDim2.new(0, 10, 0, 10)
+SettingsTitle.Size = UDim2.new(1, -20, 0, 30)
+SettingsTitle.Font = Enum.Font.GothamBold
+SettingsTitle.Text = "Keybind Settings"
+SettingsTitle.TextColor3 = Colors.PrimaryText
+SettingsTitle.TextSize = 18
+SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
+SettingsTitle.Parent = SettingsContainer    
 
 -- Add keybind info text
 local KeybindInfo = Instance.new("TextLabel")
@@ -824,6 +930,8 @@ end
 function SwitchTab(tabName)
     pcall(function()
         -- Reset all tab buttons
+        ChangelogTab.BackgroundColor3 = Colors.TabInactive
+        ChangelogTab.TextColor3 = Colors.SecondaryText
         HomeTab.BackgroundColor3 = Colors.TabInactive
         HomeTab.TextColor3 = Colors.SecondaryText
         SettingsTab.BackgroundColor3 = Colors.TabInactive
@@ -840,6 +948,7 @@ function SwitchTab(tabName)
         end
         
         -- Hide all containers
+        ChangelogContainer.Visible = false
         HomeContainer.Visible = false
         SettingsContainer.Visible = false
         LogContainer.Visible = false
@@ -852,7 +961,15 @@ function SwitchTab(tabName)
         end
         
         -- Set active tab
-        if tabName == "Home" then
+        if tabName == "Changelog" then
+            ChangelogTab.BackgroundColor3 = Colors.TabActive
+            ChangelogTab.TextColor3 = Colors.PrimaryText
+            ChangelogContainer.Visible = true
+            -- Load changelog content if needed
+            if not ChangelogContainer:FindFirstChild("MarkdownContent") then
+                LoadChangelog()
+            end
+        elseif tabName == "Home" then
             HomeTab.BackgroundColor3 = Colors.TabActive
             HomeTab.TextColor3 = Colors.PrimaryText
             HomeContainer.Visible = true
@@ -1015,6 +1132,10 @@ end
 
 -- Connect events with tracking
 -- Tab switching
+ChangelogTab.MouseButton1Click:Connect(function()
+    SwitchTab("Changelog")
+end)
+
 HomeTab.MouseButton1Click:Connect(function()
     SwitchTab("Home")
 end)
@@ -1402,3 +1523,63 @@ end)
 if not success then
     print("TradeHub Error connecting ConfigTab click: " .. tostring(err))
 end
+
+-- Load the markdown parser module
+local MarkdownParser
+pcall(function()
+    MarkdownParser = loadstring(readfile("markdown.lua"))()
+end)
+
+-- Function to load changelog content
+function LoadChangelog()
+    -- First try to load from local file
+    local changelogContent = ""
+    local success = pcall(function()
+        changelogContent = readfile("changelog.md")
+    end)
+    
+    if not success then
+        -- If local file fails, try to fetch from GitHub
+        pcall(function()
+            changelogContent = MarkdownParser.FetchFromURL("https://raw.githubusercontent.com/your-username/tradehub/main/changelog.md")
+        end)
+    end
+    
+    -- If we don't have markdown content, use a basic message
+    if not changelogContent or changelogContent == "" then
+        changelogContent = "# TradeHub Changelog\n\n## Unable to load changelog\nPlease check your internet connection or try again later."
+    end
+    
+    -- If parser is available, use it to display the changelog
+    if MarkdownParser then
+        MarkdownParser.ParseToContainer(changelogContent, ChangelogContainer, {
+            Color = {
+                Default = Colors.SecondaryText,
+                Header = Colors.PrimaryText,
+                Link = Colors.AccentColor,
+                Code = Colors.SecondaryText,
+                CodeBackground = Colors.Background
+            }
+        })
+    else
+        -- Fallback if parser is not available
+        local fallbackText = Instance.new("TextLabel")
+        fallbackText.Name = "FallbackText"
+        fallbackText.BackgroundTransparency = 1
+        fallbackText.Position = UDim2.new(0, 10, 0, 50)
+        fallbackText.Size = UDim2.new(1, -20, 1, -60)
+        fallbackText.Font = Enum.Font.Gotham
+        fallbackText.Text = "Changelog content could not be displayed. The markdown parser module is missing."
+        fallbackText.TextColor3 = Colors.SecondaryText
+        fallbackText.TextSize = 14
+        fallbackText.TextWrapped = true
+        fallbackText.TextXAlignment = Enum.TextXAlignment.Left
+        fallbackText.Parent = ChangelogContainer
+    end
+end
+
+-- Load changelog on startup
+task.spawn(function()
+    task.wait(1) -- Wait for UI to initialize
+    LoadChangelog()
+end)
