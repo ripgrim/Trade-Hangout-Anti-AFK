@@ -129,7 +129,8 @@ local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.BackgroundColor3 = Colors.CardBackground
 MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.new(0.5, -250, 0.5, -200)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5) -- Set anchor point to center
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Position at exact center of screen
 MainFrame.Size = UDim2.new(0, 500, 0, 400)
 MainFrame.Visible = false
 MainFrame.Parent = ScreenGui
@@ -1256,7 +1257,14 @@ function LoadConfig()
         
         -- Position and Size
         if config.Position then
-            MainFrame.Position = UDim2.new(0, config.Position.X, 0, config.Position.Y)
+            -- For backward compatibility with old configs that used absolute positioning
+            -- Convert to new centered positioning
+            MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+            MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+            
+            -- If we want to restore the exact position, uncomment below:
+            -- MainFrame.AnchorPoint = Vector2.new(0, 0)
+            -- MainFrame.Position = UDim2.new(0, config.Position.X, 0, config.Position.Y)
         end
         
         if config.Size then
