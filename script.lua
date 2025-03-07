@@ -47,6 +47,7 @@ local function DestroyExistingGUI()
         task.wait(0.2)
         print("TradeHub: Cleanup completed")
     else
+
         print("TradeHub: No existing GUI found")
     end
 end
@@ -587,6 +588,161 @@ pcall(function()
     WarningDot.Size = UDim2.new(0, 2, 0, 2)
     WarningDot.Parent = WarningIcon
 end)
+
+-- Add Sign Rainbow Feature Container
+local SignRainbowContainer = Instance.new("Frame")
+SignRainbowContainer.Name = "SignRainbowContainer"
+SignRainbowContainer.BackgroundColor3 = Colors.CardBackground
+SignRainbowContainer.BorderSizePixel = 0
+SignRainbowContainer.Position = UDim2.new(0, 10, 0, 270)
+SignRainbowContainer.Size = UDim2.new(1, -20, 0, 120)
+SignRainbowContainer.Parent = HomeContainer
+
+local SignRainbowContainerCorner = Instance.new("UICorner")
+SignRainbowContainerCorner.CornerRadius = UDim.new(0, 8)
+SignRainbowContainerCorner.Parent = SignRainbowContainer
+
+-- Add subtle shadow effect
+local SignRainbowShadow = Instance.new("Frame")
+SignRainbowShadow.Name = "Shadow"
+SignRainbowShadow.BackgroundColor3 = Colors.Black
+SignRainbowShadow.BackgroundTransparency = 0.7
+SignRainbowShadow.BorderSizePixel = 0
+SignRainbowShadow.Position = UDim2.new(0, 3, 0, 3)
+SignRainbowShadow.Size = UDim2.new(1, 0, 1, 0)
+SignRainbowShadow.ZIndex = 0
+SignRainbowShadow.Parent = SignRainbowContainer
+
+local SignRainbowShadowCorner = Instance.new("UICorner")
+SignRainbowShadowCorner.CornerRadius = UDim.new(0, 8)
+SignRainbowShadowCorner.Parent = SignRainbowShadow
+
+-- Sign Rainbow Title
+local SignRainbowTitle = Instance.new("TextLabel")
+SignRainbowTitle.Name = "SignRainbowTitle"
+SignRainbowTitle.BackgroundTransparency = 1
+SignRainbowTitle.Position = UDim2.new(0, 15, 0, 10)
+SignRainbowTitle.Size = UDim2.new(1, -30, 0, 30)
+SignRainbowTitle.Font = Enum.Font.GothamBold
+SignRainbowTitle.Text = "Sign Color Cycling"
+SignRainbowTitle.TextColor3 = Colors.PrimaryText
+SignRainbowTitle.TextSize = 16
+SignRainbowTitle.TextXAlignment = Enum.TextXAlignment.Left
+SignRainbowTitle.Parent = SignRainbowContainer
+
+-- Sign Rainbow Description
+local SignRainbowDescription = Instance.new("TextLabel")
+SignRainbowDescription.Name = "SignRainbowDescription"
+SignRainbowDescription.BackgroundTransparency = 1
+SignRainbowDescription.Position = UDim2.new(0, 15, 0, 40)
+SignRainbowDescription.Size = UDim2.new(1, -150, 0, 40)
+SignRainbowDescription.Font = Enum.Font.Gotham
+SignRainbowDescription.Text = "Makes your sign cycle through all available colors automatically. Requires sign tool to be equipped."
+SignRainbowDescription.TextColor3 = Colors.SecondaryText
+SignRainbowDescription.TextSize = 14
+SignRainbowDescription.TextWrapped = true
+SignRainbowDescription.TextXAlignment = Enum.TextXAlignment.Left
+SignRainbowDescription.Parent = SignRainbowContainer
+
+-- Sign Rainbow Toggle Container
+local SignRainbowToggleContainer = Instance.new("Frame")
+SignRainbowToggleContainer.Name = "SignRainbowToggleContainer"
+SignRainbowToggleContainer.BackgroundTransparency = 1
+SignRainbowToggleContainer.Position = UDim2.new(1, -120, 0, 40)
+SignRainbowToggleContainer.Size = UDim2.new(0, 100, 0, 40)
+SignRainbowToggleContainer.Parent = SignRainbowContainer
+
+-- Sign Rainbow Toggle Background
+local SignRainbowToggleBackground = Instance.new("Frame")
+SignRainbowToggleBackground.Name = "ToggleBackground"
+SignRainbowToggleBackground.BackgroundColor3 = Colors.ToggleOff
+SignRainbowToggleBackground.BorderSizePixel = 0
+SignRainbowToggleBackground.Position = UDim2.new(0.5, -22, 0.5, -10)
+SignRainbowToggleBackground.Size = UDim2.new(0, 44, 0, 20)
+SignRainbowToggleBackground.Parent = SignRainbowToggleContainer
+
+local SignRainbowToggleCorner = Instance.new("UICorner")
+SignRainbowToggleCorner.CornerRadius = UDim.new(1, 0)
+SignRainbowToggleCorner.Parent = SignRainbowToggleBackground
+
+-- Sign Rainbow Toggle Button
+local SignRainbowToggleButton = Instance.new("Frame")
+SignRainbowToggleButton.Name = "ToggleButton"
+SignRainbowToggleButton.BackgroundColor3 = Colors.White
+SignRainbowToggleButton.BorderSizePixel = 0
+SignRainbowToggleButton.Position = UDim2.new(0, 2, 0, 2)
+SignRainbowToggleButton.Size = UDim2.new(0, 16, 0, 16)
+SignRainbowToggleButton.Parent = SignRainbowToggleBackground
+
+local SignRainbowToggleButtonCorner = Instance.new("UICorner")
+SignRainbowToggleButtonCorner.CornerRadius = UDim.new(1, 0)
+SignRainbowToggleButtonCorner.Parent = SignRainbowToggleButton
+
+-- Sign Rainbow Speed Label
+local SignRainbowSpeedLabel = Instance.new("TextLabel")
+SignRainbowSpeedLabel.Name = "SpeedLabel"
+SignRainbowSpeedLabel.BackgroundTransparency = 1
+SignRainbowSpeedLabel.Position = UDim2.new(0, 15, 0, 85)
+SignRainbowSpeedLabel.Size = UDim2.new(0, 100, 0, 20)
+SignRainbowSpeedLabel.Font = Enum.Font.GothamSemibold
+SignRainbowSpeedLabel.Text = "Cycle Speed:"
+SignRainbowSpeedLabel.TextColor3 = Colors.PrimaryText
+SignRainbowSpeedLabel.TextSize = 14
+SignRainbowSpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+SignRainbowSpeedLabel.Parent = SignRainbowContainer
+
+-- Sign Rainbow Speed Slider Background
+local SignRainbowSpeedSliderBackground = Instance.new("Frame")
+SignRainbowSpeedSliderBackground.Name = "SpeedSliderBackground"
+SignRainbowSpeedSliderBackground.BackgroundColor3 = Colors.Background
+SignRainbowSpeedSliderBackground.BorderSizePixel = 0
+SignRainbowSpeedSliderBackground.Position = UDim2.new(0, 120, 0, 90)
+SignRainbowSpeedSliderBackground.Size = UDim2.new(1, -150, 0, 10)
+SignRainbowSpeedSliderBackground.Parent = SignRainbowContainer
+
+local SignRainbowSpeedSliderCorner = Instance.new("UICorner")
+SignRainbowSpeedSliderCorner.CornerRadius = UDim.new(0, 5)
+SignRainbowSpeedSliderCorner.Parent = SignRainbowSpeedSliderBackground
+
+-- Sign Rainbow Speed Slider Fill
+local SignRainbowSpeedSliderFill = Instance.new("Frame")
+SignRainbowSpeedSliderFill.Name = "SpeedSliderFill"
+SignRainbowSpeedSliderFill.BackgroundColor3 = Colors.AccentColor
+SignRainbowSpeedSliderFill.BorderSizePixel = 0
+SignRainbowSpeedSliderFill.Position = UDim2.new(0, 0, 0, 0)
+SignRainbowSpeedSliderFill.Size = UDim2.new(0.5, 0, 1, 0)
+SignRainbowSpeedSliderFill.Parent = SignRainbowSpeedSliderBackground
+
+local SignRainbowSpeedSliderFillCorner = Instance.new("UICorner")
+SignRainbowSpeedSliderFillCorner.CornerRadius = UDim.new(0, 5)
+SignRainbowSpeedSliderFillCorner.Parent = SignRainbowSpeedSliderFill
+
+-- Sign Rainbow Speed Knob
+local SignRainbowSpeedKnob = Instance.new("Frame")
+SignRainbowSpeedKnob.Name = "SpeedKnob"
+SignRainbowSpeedKnob.BackgroundColor3 = Colors.White
+SignRainbowSpeedKnob.BorderSizePixel = 0
+SignRainbowSpeedKnob.Position = UDim2.new(0.5, -8, 0.5, -8)
+SignRainbowSpeedKnob.Size = UDim2.new(0, 16, 0, 16)
+SignRainbowSpeedKnob.ZIndex = 2
+SignRainbowSpeedKnob.Parent = SignRainbowSpeedSliderBackground
+
+local SignRainbowSpeedKnobCorner = Instance.new("UICorner")
+SignRainbowSpeedKnobCorner.CornerRadius = UDim.new(1, 0)
+SignRainbowSpeedKnobCorner.Parent = SignRainbowSpeedKnob
+
+-- Sign Rainbow Status
+local SignRainbowStatus = Instance.new("TextLabel")
+SignRainbowStatus.Name = "Status"
+SignRainbowStatus.BackgroundTransparency = 1
+SignRainbowStatus.Position = UDim2.new(0, 120, 0, 40)
+SignRainbowStatus.Size = UDim2.new(0, 100, 0, 20)
+SignRainbowStatus.Font = Enum.Font.Gotham
+SignRainbowStatus.Text = "Inactive"
+SignRainbowStatus.TextColor3 = Colors.SecondaryText
+SignRainbowStatus.TextSize = 14
+SignRainbowStatus.TextXAlignment = Enum.TextXAlignment.Right
+SignRainbowStatus.Parent = SignRainbowContainer
 
 -- Home Tab Button
 local HomeTab = Instance.new("TextButton")
@@ -1655,3 +1811,788 @@ end)
 if not success then
     print("TradeHub Error connecting ConfigTab click: " .. tostring(err))
 end
+
+-- Sign Rainbow feature variables
+local SignRainbowEnabled = false
+local SignRainbowSpeed = 0.5 -- Default speed (cycles per second)
+local SignRainbowConnection = nil
+local SignRainbowLastCheck = 0
+local SignRainbowCheckInterval = 1 -- How often to check if sign exists
+
+-- Initialize the color palette during startup (only once)
+local SignColorPalette = {
+    Color3.fromRGB(255, 0, 0),      -- Red
+    Color3.fromRGB(255, 128, 0),    -- Orange
+    Color3.fromRGB(255, 255, 0),    -- Yellow
+    Color3.fromRGB(0, 255, 0),      -- Green
+    Color3.fromRGB(0, 128, 255),    -- Light Blue
+    Color3.fromRGB(0, 0, 255),      -- Blue
+    Color3.fromRGB(128, 0, 255),    -- Purple
+    Color3.fromRGB(255, 0, 255)     -- Pink
+}
+
+-- Cached Remote
+local SignColorRemote
+
+-- Optimized function to cycle through sign colors
+function CycleSignColors()
+    -- No wait needed here - the timing is now controlled by the heartbeat interval
+    
+    -- Early return if feature is disabled
+    if not SignRainbowEnabled then return end
+    
+    -- Check if sign exists
+    if not HasSignTool() then
+        LogInfo("Sign tool not found, disabling rainbow feature")
+        SignRainbowEnabled = false
+        UpdateSignRainbowStatusLabel()
+        return
+    end
+    
+    -- Initialize sign color remote (only once)
+    if not SignColorRemote then
+        SignColorRemote = game:GetService("ReplicatedStorage").Remotes.Signs.SetSignColor
+        
+        -- Try to get the actual palette from the game (only once)
+        local success, paletteInfo = pcall(function()
+            return game:GetService("ReplicatedStorage").Remotes.Signs.GetSignInfo:InvokeServer()
+        end)
+        
+        if success and paletteInfo and paletteInfo.Palette then
+            local gamePalette = paletteInfo.Palette
+            if type(gamePalette) == "table" and #gamePalette > 0 then
+                -- Only replace our palette if the game's palette is valid
+                local allValid = true
+                for i, color in ipairs(gamePalette) do
+                    if typeof(color) ~= "Color3" then
+                        allValid = false
+                        break
+                    end
+                end
+                
+                if allValid then
+                    SignColorPalette = gamePalette
+                    LogInfo("Using game's color palette with " .. #SignColorPalette .. " colors")
+                end
+            end
+        end
+    end
+    
+    -- Update color index
+    if not SignCurrentColorIndex then
+        SignCurrentColorIndex = 1
+    else
+        SignCurrentColorIndex = (SignCurrentColorIndex % #SignColorPalette) + 1
+    end
+    
+    -- Get current color
+    local currentColor = SignColorPalette[SignCurrentColorIndex]
+    if not currentColor then return end
+    
+    LogInfo("Cycling to color " .. SignCurrentColorIndex .. ": " .. tostring(currentColor))
+    
+    -- Try changing color with different parameter types
+    local success = false
+    
+    -- Method 1: Try with color index
+    success = pcall(function()
+        SignColorRemote:InvokeServer(SignCurrentColorIndex)
+    end)
+    
+    -- Method 2: Try with color value
+    if not success then
+        success = pcall(function()
+            SignColorRemote:InvokeServer(currentColor)
+        end)
+    end
+    
+    -- Log results
+    if success then
+        LogInfo("Successfully changed sign color to " .. tostring(currentColor))
+    else
+        LogInfo("Failed to change sign color")
+    end
+    
+    -- No wait needed at the end - timing is now controlled by the heartbeat interval
+end
+
+-- Function to check if player has the sign tool
+function HasSignTool()
+    local success, _ = pcall(function()
+        return game:GetService("Players").Pokemon1075.PlayerGui.CustomSignGui
+    end)
+    return success
+end
+
+-- Function to get the sign color buttons
+function GetSignColorButtons()
+    local customSignPath = "game:GetService(\"Players\").Pokemon1075.PlayerGui.CustomSignGui.Frame.Window.Frame.Frame"
+    
+    -- Convert the path string to an actual instance
+    local success, colorButtonsFrame = pcall(function()
+        return game:GetService("Players").Pokemon1075.PlayerGui.CustomSignGui.Frame.Window.Frame.Frame
+    end)
+    
+    if not success or not colorButtonsFrame then
+        warn("TradeHub: Could not find color buttons at path: " .. customSignPath)
+        return nil
+    end
+    
+    local colorButtons = {}
+    for _, button in ipairs(colorButtonsFrame:GetChildren()) do
+        if button:IsA("ImageButton") then
+            table.insert(colorButtons, button)
+        end
+    end
+    
+    if #colorButtons > 0 then
+        return colorButtons
+    else
+        warn("TradeHub: No color buttons found in frame")
+        return nil
+    end
+end
+
+-- Add a logging function to make debugging easier
+function LogInfo(message, color)
+    local color = color or Color3.fromRGB(255, 255, 255)
+    print("TradeHub SignRainbow: " .. message)
+end
+
+-- Function to cycle through the sign colors
+function CycleSignColors()
+    -- Check if sign exists
+    if not HasSignTool() then
+        LogInfo("Sign tool not found, disabling rainbow feature", Color3.fromRGB(255, 100, 100))
+        if SignRainbowEnabled then
+            -- If we had it enabled, disable it and update the UI
+            SignRainbowEnabled = false
+            UpdateSignRainbowStatusLabel()
+        end
+        return
+    end
+    
+    -- Get all color buttons
+    local colorButtons = GetSignColorButtons()
+    if not colorButtons or #colorButtons == 0 then
+        LogInfo("No color buttons found", Color3.fromRGB(255, 100, 100))
+        return
+    end
+    
+    LogInfo("Found " .. #colorButtons .. " color buttons")
+    
+    -- Use a sequential approach instead of random
+    if not SignCurrentColorIndex then
+        SignCurrentColorIndex = 1
+    else
+        SignCurrentColorIndex = (SignCurrentColorIndex % #colorButtons) + 1
+    end
+    
+    local button = colorButtons[SignCurrentColorIndex]
+    LogInfo("Attempting to use color " .. SignCurrentColorIndex .. " (Name: " .. button.Name .. ")")
+    
+    -- DIRECT METHOD: Use the proper remote function based on the decompiled script
+    local colorChangeSuccess = false
+    
+    -- First, try to get the actual palette from the game (only once)
+    if not SignColorPalette then
+        SignColorPalette = {}
+        pcall(function()
+            -- Try to get the palette from the game
+            local paletteInfo = game:GetService("ReplicatedStorage").Remotes.Signs.GetSignInfo:InvokeServer()
+            if paletteInfo and paletteInfo.Palette then
+                SignColorPalette = paletteInfo.Palette
+                LogInfo("Successfully retrieved sign color palette with " .. #SignColorPalette .. " colors")
+                
+                -- Log the palette colors
+                for i, color in ipairs(SignColorPalette) do
+                    if typeof(color) == "Color3" then
+                        LogInfo("Palette color " .. i .. ": " .. tostring(color))
+                    else
+                        LogInfo("Palette color " .. i .. " is not a Color3 value, it's a " .. typeof(color))
+                    end
+                end
+            end
+        end)
+        
+        -- If we couldn't get the palette, use a default one
+        if #SignColorPalette == 0 then
+            LogInfo("Using default color palette")
+            SignColorPalette = {
+                Color3.fromRGB(255, 0, 0),      -- Red
+                Color3.fromRGB(255, 128, 0),    -- Orange
+                Color3.fromRGB(255, 255, 0),    -- Yellow
+                Color3.fromRGB(0, 255, 0),      -- Green
+                Color3.fromRGB(0, 128, 255),    -- Light Blue
+                Color3.fromRGB(0, 0, 255),      -- Blue
+                Color3.fromRGB(128, 0, 255),    -- Purple
+                Color3.fromRGB(255, 0, 255)     -- Pink
+            }
+        end
+    end
+    
+    -- Try to set the color using the remote
+    pcall(function()
+        local remote = game:GetService("ReplicatedStorage").Remotes.Signs.SetSignColor
+        
+        -- Try different approaches to change the color
+        
+        -- First approach: Try using the current index
+        LogInfo("Trying to set color using index: " .. SignCurrentColorIndex)
+        local success = pcall(function()
+            remote:InvokeServer(SignCurrentColorIndex)
+        end)
+        
+        if success then
+            LogInfo("Successfully changed color using index parameter", Color3.fromRGB(100, 255, 100))
+            colorChangeSuccess = true
+            return
+        end
+        
+        -- Second approach: Use a color from our palette
+        if SignColorPalette and #SignColorPalette >= SignCurrentColorIndex then
+            local colorParam = SignColorPalette[SignCurrentColorIndex]
+            if colorParam and typeof(colorParam) == "Color3" then
+                LogInfo("Trying to set color using palette Color3 value: " .. tostring(colorParam))
+                success = pcall(function()
+                    remote:InvokeServer(colorParam)
+                end)
+                
+                if success then
+                    LogInfo("Successfully changed color using palette Color3 parameter", Color3.fromRGB(100, 255, 100))
+                    colorChangeSuccess = true
+                    return
+                end
+            end
+        end
+        
+        -- Third approach: Use hard-coded colors
+        local hardcodedColors = {
+            Color3.fromRGB(255, 0, 0),      -- Red
+            Color3.fromRGB(255, 128, 0),    -- Orange
+            Color3.fromRGB(255, 255, 0),    -- Yellow
+            Color3.fromRGB(0, 255, 0),      -- Green
+            Color3.fromRGB(0, 128, 255),    -- Light Blue
+            Color3.fromRGB(0, 0, 255),      -- Blue
+            Color3.fromRGB(128, 0, 255),    -- Purple
+            Color3.fromRGB(255, 0, 255)     -- Pink
+        }
+        
+        if hardcodedColors[SignCurrentColorIndex] then
+            local colorParam = hardcodedColors[SignCurrentColorIndex]
+            LogInfo("Trying to set color using hardcoded Color3 value: " .. tostring(colorParam))
+            success = pcall(function()
+                remote:InvokeServer(colorParam)
+            end)
+            
+            if success then
+                LogInfo("Successfully changed color using hardcoded Color3 parameter", Color3.fromRGB(100, 255, 100))
+                colorChangeSuccess = true
+                return
+            end
+        end
+    end)
+    
+    -- If remote method failed, try clicking the button directly
+    if not colorChangeSuccess then
+        LogInfo("Trying button:Activate() method")
+        pcall(function()
+            button:Activate()
+            LogInfo("Called Activate() on button")
+        end)
+    end
+    
+    -- Slow down the cycling a bit so colors are more noticeable
+end
+
+-- Function to toggle the sign rainbow feature
+function ToggleSignRainbow()
+    SignRainbowEnabled = not SignRainbowEnabled
+    
+    if SignRainbowEnabled then
+        -- Start cycling colors
+        if not SignRainbowConnection then
+            -- Track when we last changed color
+            local lastColorChange = 0
+            
+            SignRainbowConnection = RunService.Heartbeat:Connect(function(deltaTime)
+                SignRainbowLastCheck = SignRainbowLastCheck + deltaTime
+                
+                -- Check if the sign exists periodically
+                if SignRainbowLastCheck >= SignRainbowCheckInterval then
+                    if not HasSignTool() then
+                        -- If sign doesn't exist, disable rainbow
+                        SignRainbowEnabled = false
+                        UpdateSignRainbowStatusLabel()
+                        SignRainbowLastCheck = 0
+                        return
+                    end
+                    SignRainbowLastCheck = 0
+                end
+                
+                -- Cycle colors based on speed
+                -- Add accumulated time since last frame
+                lastColorChange = lastColorChange + deltaTime
+                
+                -- Calculate interval based on cycles per second
+                local cycleInterval = 1 / SignRainbowSpeed
+                
+                -- If enough time has passed for a color change, do it
+                if lastColorChange >= cycleInterval then
+                    CycleSignColors()
+                    -- Reset timer but keep remainder for smooth timing
+                    lastColorChange = lastColorChange % cycleInterval
+                end
+            end)
+        end
+    else
+        -- Stop cycling colors
+        if SignRainbowConnection then
+            SignRainbowConnection:Disconnect()
+            SignRainbowConnection = nil
+        end
+    end
+    
+    -- Update UI
+    UpdateSignRainbowStatusLabel()
+end
+
+-- Function to update the Sign Rainbow speed
+function UpdateSignRainbowSpeed(scale)
+    -- Clamp scale between 0 and 1
+    scale = math.max(0, math.min(1, scale))
+    
+    -- Map 0-1 to 0.1-2 cycles per second (slower to faster)
+    -- Adjusted range: 0.05 to 3 cycles per second for better slow to fast range
+    SignRainbowSpeed = 0.05 + (scale * 2.95)
+    
+    -- Update UI
+    SignRainbowSpeedSliderFill.Size = UDim2.new(scale, 0, 1, 0)
+    SignRainbowSpeedKnob.Position = UDim2.new(scale, -8, 0.5, -8)
+    
+    local speedText = string.format("%.2f", SignRainbowSpeed) .. " cycles per second"
+    if SignRainbowSpeedLabel then
+        SignRainbowSpeedLabel.Text = speedText
+    end
+    
+    LogInfo("Rainbow speed set to " .. speedText)
+end
+
+-- Function to update the Sign Rainbow status label
+function UpdateSignRainbowStatusLabel()
+    if not SignRainbowStatus then return end
+    
+    if SignRainbowEnabled then
+        SignRainbowToggleBackground.BackgroundColor3 = Colors.ToggleOn
+        SignRainbowToggleButton.Position = UDim2.new(1, -18, 0, 2)
+        
+        if HasSignTool() then
+            SignRainbowStatus.Text = "Active"
+            SignRainbowStatus.TextColor3 = Colors.Success
+        else
+            SignRainbowStatus.Text = "Sign not found"
+            SignRainbowStatus.TextColor3 = Colors.Error
+        end
+    else
+        SignRainbowToggleBackground.BackgroundColor3 = Colors.ToggleOff
+        SignRainbowToggleButton.Position = UDim2.new(0, 2, 0, 2)
+        SignRainbowStatus.Text = "Inactive"
+        SignRainbowStatus.TextColor3 = Colors.SecondaryText
+    end
+end
+
+-- Remove any references to logging functions
+local debugButton = SignRainbowContainer:FindFirstChild("DebugButton")
+if debugButton then
+    debugButton:Destroy()
+end
+
+-- Initialize the sign rainbow UI
+UpdateSignRainbowStatusLabel()
+
+-- Connect Sign Rainbow toggle event
+SignRainbowToggleBackground.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        ToggleSignRainbow()
+    end
+end)
+
+SignRainbowToggleButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        ToggleSignRainbow()
+    end
+end)
+
+-- Connect speed slider events
+local sliderDragging = false
+
+SignRainbowSpeedSliderBackground.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        sliderDragging = true
+        
+        -- Calculate slider position
+        local sliderPosition = input.Position.X - SignRainbowSpeedSliderBackground.AbsolutePosition.X
+        local sliderScale = sliderPosition / SignRainbowSpeedSliderBackground.AbsoluteSize.X
+        
+        UpdateSignRainbowSpeed(sliderScale)
+    end
+end)
+
+SignRainbowSpeedSliderBackground.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        sliderDragging = false
+    end
+end)
+
+SignRainbowSpeedKnob.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        sliderDragging = true
+    end
+end)
+
+SignRainbowSpeedKnob.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        sliderDragging = false
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        -- Calculate slider position
+        local sliderPosition = input.Position.X - SignRainbowSpeedSliderBackground.AbsolutePosition.X
+        local sliderScale = sliderPosition / SignRainbowSpeedSliderBackground.AbsoluteSize.X
+        
+        UpdateSignRainbowSpeed(sliderScale)
+    end
+end)
+
+-- Add a debug button to log the sign structure
+local LogStructureButton = Instance.new("TextButton")
+LogStructureButton.Name = "LogStructureButton"
+LogStructureButton.BackgroundColor3 = Colors.Background
+LogStructureButton.BorderSizePixel = 0
+LogStructureButton.Position = UDim2.new(1, -85, 0, 15)
+LogStructureButton.Size = UDim2.new(0, 70, 0, 20)
+LogStructureButton.Font = Enum.Font.GothamSemibold
+LogStructureButton.Text = "Debug Log"
+LogStructureButton.TextColor3 = Colors.SecondaryText
+LogStructureButton.TextSize = 10
+LogStructureButton.Parent = SignRainbowContainer
+
+local LogStructureButtonCorner = Instance.new("UICorner")
+LogStructureButtonCorner.CornerRadius = UDim.new(0, 4)
+LogStructureButtonCorner.Parent = LogStructureButton
+
+-- Initialize sign rainbow UI (for cases where config is loaded)
+local function InitializeSignRainbowUI()
+    if SignRainbowEnabled then
+        SignRainbowToggleBackground.BackgroundColor3 = Colors.ToggleOn
+        SignRainbowToggleButton.Position = UDim2.new(1, -18, 0, 2)
+        SignRainbowStatus.Text = "Active"
+        SignRainbowStatus.TextColor3 = Colors.Success
+    else
+        SignRainbowToggleBackground.BackgroundColor3 = Colors.ToggleOff
+        SignRainbowToggleButton.Position = UDim2.new(0, 2, 0, 2)
+        SignRainbowStatus.Text = "Inactive"
+        SignRainbowStatus.TextColor3 = Colors.SecondaryText
+    end
+    
+    -- Set slider position based on speed
+    local scale = (SignRainbowSpeed - 0.1) / 1.9
+    SignRainbowSpeedSliderFill.Size = UDim2.new(scale, 0, 1, 0)
+    SignRainbowSpeedKnob.Position = UDim2.new(scale, -8, 0.5, -8)
+end
+
+-- Update SaveConfig and LoadConfig functions to include Sign Rainbow settings
+local originalSaveConfig = SaveConfig
+function SaveConfig()
+    local success, result = pcall(function()
+        -- Create a table with settings
+        local config = {
+            AntiAFK = AntiAFK,
+            KeybindSettings = {
+                Minimize = KeybindSettings.Minimize.Name,
+                KillGUI = KeybindSettings.KillGUI.Name,
+                ToggleAntiAFK = KeybindSettings.ToggleAntiAFK.Name
+            },
+            -- Add Sign Rainbow settings
+            SignRainbow = {
+                Enabled = SignRainbowEnabled,
+                Speed = SignRainbowSpeed
+            }
+        }
+        
+        -- Convert to JSON
+        local jsonConfig = game:GetService("HttpService"):JSONEncode(config)
+        
+        -- Save to file
+        if writefile then
+            writefile(ConfigFilename, jsonConfig)
+        else
+            return false, "writefile function not available"
+        end
+        
+        AddLog("Configuration saved successfully", Colors.Success)
+        ConfigStatus.Text = "Status: Configuration saved successfully!"
+        ConfigStatus.TextColor3 = Colors.Success
+        
+        return true
+    end)
+    
+    if not success then
+        AddLog("Failed to save configuration: " .. tostring(result), Colors.Error)
+        ConfigStatus.Text = "Status: Failed to save configuration. " .. tostring(result)
+        ConfigStatus.TextColor3 = Colors.Error
+        return false
+    end
+    
+    return success
+end
+
+local originalLoadConfig = LoadConfig
+function LoadConfig()
+    local success, result = pcall(function()
+        if not isfile or not readfile or not isfile(ConfigFilename) then
+            return false, "File does not exist or file functions not available"
+        end
+        
+        -- Read configuration file
+        local content = readfile(ConfigFilename)
+        
+        -- Parse JSON
+        local config = game:GetService("HttpService"):JSONDecode(content)
+        
+        -- Update keybind settings if they exist in the config
+        if config.KeybindSettings then
+            -- Update Minimize keybind
+            if config.KeybindSettings.Minimize then
+                local keyCode = Enum.KeyCode[config.KeybindSettings.Minimize]
+                if keyCode then
+                    KeybindSettings.Minimize = keyCode
+                    UpdateKeybindButton(MinimizeKeybindButton, keyCode)
+                end
+            end
+            
+            -- Update KillGUI keybind
+            if config.KeybindSettings.KillGUI then
+                local keyCode = Enum.KeyCode[config.KeybindSettings.KillGUI]
+                if keyCode then
+                    KeybindSettings.KillGUI = keyCode
+                    UpdateKeybindButton(KillGUIKeybindButton, keyCode)
+                end
+            end
+            
+            -- Update ToggleAntiAFK keybind
+            if config.KeybindSettings.ToggleAntiAFK then
+                local keyCode = Enum.KeyCode[config.KeybindSettings.ToggleAntiAFK]
+                if keyCode then
+                    KeybindSettings.ToggleAntiAFK = keyCode
+                    UpdateKeybindButton(ToggleAFKKeybindButton, keyCode)
+                end
+            end
+        end
+        
+        -- Update AntiAFK setting if it exists in the config
+        if config.AntiAFK ~= nil then
+            AntiAFK = config.AntiAFK
+            UpdateToggle()
+            ConnectAntiAFK()
+        end
+        
+        -- Load Sign Rainbow settings if they exist
+        if config.SignRainbow then
+            -- Set the enabled state without triggering the toggle function
+            SignRainbowEnabled = config.SignRainbow.Enabled or false
+            
+            -- Set the speed
+            if config.SignRainbow.Speed then
+                SignRainbowSpeed = config.SignRainbow.Speed
+            end
+            
+            -- Update UI
+            InitializeSignRainbowUI()
+            
+            -- Activate if needed
+            if SignRainbowEnabled then
+                -- If already active, disable first
+                if SignRainbowConnection then
+                    SignRainbowConnection:Disconnect()
+                    SignRainbowConnection = nil
+                end
+                
+                -- Start cycle loop
+                SignRainbowConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                    -- Calculate delay based on speed
+                    local delay = 1 / (SignRainbowSpeed * 2)
+                    
+                    -- Use a static variable to track the last time we cycled
+                    if not SignRainbowLastCycle then SignRainbowLastCycle = 0 end
+                    
+                    if tick() - SignRainbowLastCycle > delay then
+                        CycleSignColors()
+                        SignRainbowLastCycle = tick()
+                    end
+                end)
+            end
+        end
+        
+        AddLog("Configuration loaded successfully", Colors.Success)
+        ConfigStatus.Text = "Status: Configuration loaded successfully!"
+        ConfigStatus.TextColor3 = Colors.Success
+        
+        return true
+    end)
+    
+    if not success then
+        AddLog("Failed to load configuration: " .. tostring(result), Colors.Error)
+        ConfigStatus.Text = "Status: Failed to load configuration. " .. tostring(result)
+        ConfigStatus.TextColor3 = Colors.Error
+        return false
+    end
+    
+    return success
+end
+
+local originalResetConfig = ResetConfig
+function ResetConfig()
+    local success, result = pcall(function()
+        -- Reset keybinds to default
+        KeybindSettings = {
+            Minimize = Enum.KeyCode.RightShift,
+            KillGUI = Enum.KeyCode.Backspace,
+            ToggleAntiAFK = Enum.KeyCode.F
+        }
+        
+        -- Update keybind buttons
+        UpdateKeybindButton(MinimizeKeybindButton, KeybindSettings.Minimize)
+        UpdateKeybindButton(KillGUIKeybindButton, KeybindSettings.KillGUI)
+        UpdateKeybindButton(ToggleAFKKeybindButton, KeybindSettings.ToggleAntiAFK)
+        
+        -- Reset Anti-AFK state
+        AntiAFK = false
+        UpdateToggle()
+        ConnectAntiAFK()
+        
+        -- Reset Sign Rainbow settings
+        SignRainbowEnabled = false
+        SignRainbowSpeed = 0.5
+        
+        -- Stop rainbow cycle if active
+        if SignRainbowConnection then
+            SignRainbowConnection:Disconnect()
+            SignRainbowConnection = nil
+        end
+        
+        -- Update UI
+        InitializeSignRainbowUI()
+        
+        -- If saved config exists, delete it
+        if isfile(ConfigFilename) then
+            delfile(ConfigFilename)
+        end
+        
+        AddLog("Configuration reset to default", Colors.Warning)
+        ConfigStatus.Text = "Status: Configuration reset to default settings"
+        ConfigStatus.TextColor3 = Colors.Warning
+        
+        return true
+    end)
+    
+    if not success then
+        AddLog("Failed to reset configuration: " .. tostring(result), Colors.Error)
+        ConfigStatus.Text = "Status: Failed to reset configuration. " .. tostring(result)
+        ConfigStatus.TextColor3 = Colors.Error
+        return false
+    end
+    
+    return success
+end
+
+-- Check if sign exists on startup
+task.spawn(function()
+    task.wait(5) -- Wait for game to fully load
+    if HasSignTool() then
+        SignRainbowStatus.Text = "Ready"
+        SignRainbowStatus.TextColor3 = Colors.SecondaryText
+    else
+        SignRainbowStatus.Text = "Sign not found"
+        SignRainbowStatus.TextColor3 = Colors.Error
+    end
+end)
+
+-- Add a new button to execute the script
+task.spawn(function()
+    -- Wait for the SignRainbowContainer to be created
+    task.wait(2)
+    
+    -- Create a DEX Explorer button
+    local dexButton = Instance.new("TextButton")
+    dexButton.Name = "DexExplorerButton"
+    dexButton.BackgroundColor3 = Colors.AccentColor
+    dexButton.BorderSizePixel = 0
+    dexButton.Position = UDim2.new(0, 10, 1, 10)  -- Position it below the Sign Rainbow container
+    dexButton.Size = UDim2.new(0, 120, 0, 30)
+    dexButton.Font = Enum.Font.GothamSemibold
+    dexButton.Text = "Open DEX Explorer"
+    dexButton.TextColor3 = Colors.PrimaryText
+    dexButton.TextSize = 12
+    dexButton.Parent = SignRainbowContainer
+    
+    local dexButtonCorner = Instance.new("UICorner")
+    dexButtonCorner.CornerRadius = UDim.new(0, 6)
+    dexButtonCorner.Parent = dexButton
+    
+    -- Add click event
+    dexButton.MouseButton1Click:Connect(function()
+        -- Execute the provided script
+        local success, error = pcall(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TapFow/Scripts/main/jjsploit_fixed_dex.luau"))()
+        end)
+        
+        if not success then
+            warn("Failed to load DEX Explorer: " .. tostring(error))
+        end
+    end)
+end)
+
+-- Update the UI creation code to remove border radius and add scrolling frame
+task.spawn(function()
+    task.wait(1) -- Wait for GUI to be created
+    
+    -- Create a ScrollingFrame to wrap all content
+    local scrollFrame = Instance.new("ScrollingFrame")
+    scrollFrame.Name = "ContentScrollFrame"
+    scrollFrame.Size = UDim2.new(1, 0, 1, 0)
+    scrollFrame.Position = UDim2.new(0, 0, 0, 0)
+    scrollFrame.BackgroundTransparency = 1
+    scrollFrame.BorderSizePixel = 0
+    scrollFrame.ScrollBarThickness = 6
+    scrollFrame.ScrollingDirection = Enum.ScrollingDirection.Y
+    scrollFrame.CanvasSize = UDim2.new(1, 0, 0, 800) -- Adjust this value based on content height
+    scrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    
+    -- Find the main containers and move them to the scrolling frame
+    local mainGui = ScreenGui
+    if mainGui then
+        -- Parent the scroll frame to the main GUI
+        scrollFrame.Parent = mainGui
+        
+        -- Move all content to the scroll frame
+        for _, child in pairs(mainGui:GetChildren()) do
+            if child:IsA("Frame") and child ~= scrollFrame then
+                child.Parent = scrollFrame
+            end
+        end
+        
+        -- Remove all border radius (corner) objects throughout the UI
+        local function removeCorners(parent)
+            for _, child in pairs(parent:GetDescendants()) do
+                if child:IsA("UICorner") then
+                    child:Destroy()
+                end
+            end
+        end
+        
+        removeCorners(scrollFrame)
+    end
+end)
